@@ -49,8 +49,14 @@ typedef struct s_pars
 	t_redirect	*redirect;
 }		t_pars;
 
-int	ft_cd(char **args);
-int	minishell_loop(void);
+//Command
+int ft_echo(char **args);
+int ft_cd(char **args);
+int ft_pwd(void);
+int ft_env(void);
+int ft_export(char **args);
+int ft_unset(char **args);
+void ft_exit(char **args);
 
 // parsing
 t_pars *read_cmd(t_pars *read);

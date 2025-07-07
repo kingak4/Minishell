@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/06 12:14:56 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/07 23:31:54 by kdyga            ###   ########.fr       */
+/*   Created: 2025/07/07 22:19:42 by kdyga             #+#    #+#             */
+/*   Updated: 2025/07/07 23:31:46 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_cd(char **args)
+int	ft_pwd(void)
 {
-    const char *path;
+	char	cwd[PATH_MAX];
 
-    if (!args[1])
-        path = getenv("HOME");
-    else
-        path = args[1];
-
-    if (chdir(path) != 0)
-        perror("cd");
-
-    return 1;
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		printf("%s\n", cwd);
+	else
+		perror("pwd");
+	return (0);
 }
