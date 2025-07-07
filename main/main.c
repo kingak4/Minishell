@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/06 15:44:29 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/07 16:00:53 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,27 @@ int minishell_loop(void)
     return 0;
 }
 
+//int main(void)
+//{
+//    return minishell_loop();
+//}
+
 int main(void)
 {
-    return minishell_loop();
+	t_pars cmd;
+
+	while (1)
+	{
+		if (!read_cmd(&cmd))
+		{
+			printf("\nKoniec lub blad odczytu. Koncze program.\n");
+			break;
+		}
+
+		printf("Wczytano linie: %s\n", cmd.line);
+
+		free(cmd.line);
+	}
+	rl_clear_history();
+	return 0;
 }
