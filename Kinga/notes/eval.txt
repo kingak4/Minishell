@@ -1,0 +1,150 @@
+📎 Część obowiązkowa (Mandatory Part)
+🔧 Kompilacja
+Użyj make -n, aby sprawdzić, czy kompilacja używa flag -Wall -Wextra -Werror. Jeśli nie – zaznacz flagę "nieprawidłowa kompilacja".
+
+minishell kompiluje się bez żadnych błędów. Jeśli nie – zaznacz flagę.
+
+Makefile nie powinien przelinkowywać (relink). Jeśli tak się dzieje – zaznacz flagę.
+
+🟢 Proste polecenia i zmienne globalne
+Uruchom proste polecenie z absolutną ścieżką, np. /bin/ls, bez opcji.
+
+Ile zmiennych globalnych jest używanych? Dlaczego? Poproś ocenianego o podanie konkretnego przykładu, dlaczego ich użycie wydaje się konieczne lub logiczne.
+
+Przetestuj pustą komendę.
+
+Przetestuj komendy zawierające tylko spacje lub tabulatory.
+
+Jeśli coś się zawiesza – zaznacz flagę "crash".
+
+Jeśli coś nie działa – zaznacz flagę "niekompletna praca".
+
+🧾 Argumenty
+Uruchom proste polecenie z absolutną ścieżką (np. /bin/ls) z argumentami, ale bez użycia cudzysłowów.
+
+Powtórz wielokrotnie z różnymi poleceniami i argumentami.
+
+🗣️ echo
+Uruchom echo z lub bez argumentów, z opcją -n.
+
+Powtarzaj z różnymi argumentami.
+
+🚪 exit
+Uruchom exit z lub bez argumentów.
+
+Powtórz z różnymi argumentami.
+
+Nie zapomnij ponownie uruchomić minishell.
+
+🔁 Kod powrotu procesu ($?)
+Uruchom polecenie (np. /bin/ls), potem echo $?
+
+Sprawdź, czy wypisany kod zgadza się z rzeczywistością (porównaj z bash).
+
+Przetestuj błędne komendy (np. /bin/ls filethatdoesntexist)
+
+Spróbuj np. expr $? + $?
+
+⚠️ Sygnały
+Ctrl-C na pustym promptcie: powinna pojawić się nowa linia i nowy prompt.
+
+Ctrl-\ na pustym promptcie: nic się nie powinno stać.
+
+Ctrl-D na pustym promptcie: minishell powinien się zamknąć → uruchom ponownie.
+
+Ctrl-C po wpisaniu tekstu: powinna pojawić się nowa linia i nowy prompt, bufor ma być wyczyszczony.
+
+Enter nie powinien wykonać starej linii.
+
+Ctrl-D po wpisaniu czegoś: nic się nie powinno stać.
+
+Ctrl-\ po wpisaniu czegoś: nic się nie powinno stać.
+
+Przetestuj Ctrl-C, Ctrl-\, Ctrl-D po uruchomieniu poleceń blokujących, np. cat, grep "coś".
+
+📐 Cudzysłowy
+Podwójne (")
+Uruchom polecenie z argumentami i z użyciem podwójnych cudzysłowów (testuj też spacje w środku).
+
+Przykład: echo "cat lol.c | cat > lol.c"
+
+Testuj wszystko z wyjątkiem $
+
+Pojedyncze (')
+Uruchom polecenia z pojedynczymi cudzysłowami.
+
+Testuj puste argumenty, zmienne środowiskowe, spacje, pipe’y, redirekcje.
+
+echo '$USER' powinno wypisać dokładnie $USER.
+
+Nic nie powinno być interpretowane.
+
+🌍 Komendy środowiskowe
+env
+Sprawdź, czy env pokazuje zmienne środowiskowe.
+
+export
+Eksportuj nowe zmienne, zmień istniejące.
+
+Sprawdź wynik poleceniem env.
+
+unset
+Usuń zmienne wcześniej ustawione.
+
+cd
+Zmień katalog roboczy, sprawdź, czy działa (/bin/ls).
+
+Przetestuj cd ., cd ...
+
+pwd
+Uruchom pwd w różnych katalogach.
+
+🧭 Ścieżki
+Ścieżka względna
+Uruchom komendy z użyciem ścieżek względnych
+
+Przetestuj w różnych katalogach z bardziej złożoną strukturą (np. wiele ..)
+
+Ścieżka ze zmiennej środowiskowej
+Uruchom komendy bez ścieżki (np. ls, wc, awk)
+
+Unset $PATH – komendy nie powinny działać
+
+Ustaw PATH na wiele katalogów – powinny być przeszukiwane w kolejności
+
+➡️ Redirekcje
+Przetestuj <, >, >> – różne komendy i argumenty
+
+Sprawdź, czy ponowne redirekcje dają błąd
+
+Przetestuj << (heredoc – nie musi dodawać do historii)
+
+🧪 Pipe’y
+cat file | grep bla | more
+
+Różne polecenia + argumenty
+
+Nieprawidłowe komendy np. ls nieistnieje | grep bla
+
+Mieszaj pipe'y i redirekcje
+
+🎭 “Go Crazy” i historia
+Wpisz komendę, potem Ctrl-C i Enter. Bufor powinien być pusty.
+
+Czy można poruszać się po historii (strzałki)? Czy można powtórzyć komendę?
+
+Uruchom komendy, które nie istnieją – minishell nie może się zawieszać.
+
+cat | cat | ls powinno działać normalnie.
+
+Spróbuj długiej komendy z masą argumentów.
+
+💲 Zmienne środowiskowe
+echo $VAR – czy zmienne są rozwijane?
+
+"echo $USER" powinno wypisać wartość zmiennej
+
+'echo $USER' powinno wypisać literalny $USER
+
+Sprawdź, czy USER istnieje – jeśli nie, ustaw go
+

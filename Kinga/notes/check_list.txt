@@ -1,0 +1,115 @@
+🔧 Kompilacja i Makefile
+ Makefile zawiera targety: NAME, all, clean, fclean, re
+
+ Kompiluje się poprawnie: bez błędów, bez ostrzeżeń (-Wall -Wextra -Werror)
+
+ make nie wykonuje przelinkowania (czyli nie robi nic, jeśli wszystko już jest zbudowane)
+
+ Nie ma wycieków pamięci (sprawdź valgrind, leaks)
+
+ Nie ma użycia zakazanych funkcji ani aliasów
+
+🟢 Podstawowa funkcjonalność
+ Shell wyświetla prompt po uruchomieniu i po każdym wykonaniu komendy
+
+ Shell zapamiętuje historię (działa strzałka w górę i w dół)
+
+ Komendy można uruchamiać z:
+
+ absolutną ścieżką (np. /bin/ls)
+
+ relatywną ścieżką (np. ./my_script)
+
+ bez ścieżki (jeśli jest ustawiona zmienna PATH)
+
+ Po usunięciu PATH komendy przestają działać
+
+ Działa interpretacja zmiennych środowiskowych ($USER, $HOME, itp.)
+
+ Działa $? — zwraca kod wyjścia poprzedniej komendy
+
+ Obsługiwane są komendy wbudowane (builtins):
+
+ echo z opcją -n
+
+ cd z relatywną i absolutną ścieżką, także . i ..
+
+ pwd
+
+ export (tworzenie i nadpisywanie zmiennych)
+
+ unset (usuwanie zmiennych)
+
+ env (wypisuje środowisko)
+
+ exit z i bez argumentów
+
+ Shell nie wykonuje komend, jeśli użytkownik wpisze pustą linię lub samą spację
+
+ Shell używa maksymalnie jednej zmiennej globalnej do sygnałów (np. g_exit_status)
+
+📐 Obsługa cudzysłowów
+ Pojedyncze cudzysłowy '...' – wszystko traktowane dosłownie (np. echo '$USER' wypisuje $USER)
+
+ Podwójne cudzysłowy "..." – interpretowane zmienne (echo "$USER" wypisuje wartość)
+
+ Niezamknięte cudzysłowy powodują błąd (a nie segfault ani dziwne zachowanie)
+
+ Shell nie obsługuje nieopisanych znaków specjalnych: \, ;, itp.
+
+➡️ Redirekcje
+ > – przekierowanie wyjścia do pliku (nadpisanie)
+
+ >> – przekierowanie wyjścia do pliku (dopisywanie)
+
+ < – wczytanie danych z pliku
+
+ << – heredoc działa poprawnie (nie musi zapisywać do historii)
+
+ W przypadku nieprawidłowej składni redirekcji shell nie crashuje i wypisuje błąd
+
+🧪 Pipe’y
+ Polecenia połączone | działają poprawnie: cat file | grep x | wc
+
+ Błędne komendy w środku pipe’a (np. ls nieistnieje | grep x) nie wywalają programu
+
+ Można łączyć pipe’y i redirekcje (cat < file | grep x > out)
+
+ Działa przypadek cat | cat | ls
+
+⚠️ Obsługa sygnałów
+ Ctrl-C na pustym promptcie: wyświetla nową linię i nowy prompt
+
+ Ctrl-C po wpisaniu komendy: czyszczony bufor, nic nie wykonuje się
+
+ Ctrl-D na pustym promptcie: kończy minishell
+
+ Ctrl-D po wpisaniu tekstu: nic się nie dzieje
+
+ Ctrl-\ w każdej sytuacji: nic się nie dzieje
+
+ Obsługa Ctrl-C, Ctrl-D, Ctrl-\ działa również przy uruchomieniu komend blokujących (cat, grep)
+
+💲 Zmienne środowiskowe
+ echo $VAR – zmienne są rozwijane do wartości
+
+ echo "$VAR" – również rozwija do wartości
+
+ echo '$VAR' – wypisuje dosłownie $VAR
+
+ Jeśli USER nie istnieje – shell potrafi go ustawić
+
+🎭 Zachowanie interaktywne i testy skrajne
+ Bufor jest czyszczony po Ctrl-C + Enter (nic się nie wykonuje)
+
+ Shell nie zawiesza się przy błędnych poleceniach (sdgshgshg)
+
+ Shell działa stabilnie przy długich liniach z wieloma argumentami
+
+ Możliwa jest nawigacja po historii (strzałki góra/dół)
+
+ Można powtarzać wcześniejsze komendy z historii
+ 
+ skrót w Visual Studio aby poprawić kod zgodnie z norminette Control+shift+I
+
+

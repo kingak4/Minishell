@@ -1,0 +1,271 @@
+Podzielić wejściowy string na tokeny: słowa, operatory (|, >, <, >>, <<), separatory ( , \t) i specjalne elementy (", ', $).
+
+✅ KLUCZOWE ZASADY:
+Token to nie to samo co słowo – token może być np. operator redirekcji >>, pojedyncze słowo, string w cudzysłowie itp.
+
+Szanuj cudzysłowy:
+
+" pozwala na ekspansję zmiennych ("$HOME" → /home/kinga),
+
+' literalnie – bez ekspansji ('$HOME' → $HOME).
+
+Zadbaj o specjalne znaki:
+
+|, >, >>, <, << muszą być osobnymi tokenami.
+
+Zignoruj spacje i taby jako delimitery tokenów, ale nie wewnątrz cudzysłowów.
+
+Zadbaj o escapy (\) – tylko w kontekście cudzysłowów.
+📚 CZĘŚĆ 2: PARSING
+🎯 CEL:
+Na podstawie listy tokenów zbudować strukturę opisującą polecenia do wykonania, z informacją o:
+
+poleceniu i jego argumentach,
+
+redirekcjach,
+
+heredocach,
+
+pipe’ach.
+
+✅ KLUCZOWE ZASADY:
+Wykryj granice komend – pipe (|) oddziela polecenia.
+
+Każda komenda ma swoją strukturę np.:
+Argumenty zbieraj po kolei – po poleceniu czytaj wszystkie T_WORD, dopóki nie trafisz na pipe lub koniec.
+
+Redirekcje przetwarzaj parami: > musi być zaraz po nim T_WORD (nazwa pliku).
+
+Waliduj składnię – wykrywaj błędy typu:
+
+| ls (pipe na początku),
+
+cat < (brak pliku po redirekcji),
+
+ls || grep (podwójny pipe),
+
+> bez pliku.
+📌 DOBRE NAWYKI I STRATEGIE
+🧱 1. Lexer i Parser jako osobne moduły
+Lexer = char *line → t_token *tokens
+
+Parser = t_token *tokens → t_cmd **commands
+
+🧪 2. Zbuduj testy jednostkowe
+Testuj lexera i parsera niezależnie. Przykłady wejść:
+
+echo "hello world" > out.txt
+
+cat < in.txt | grep hi | wc -l
+
+echo '$USER' >> out.txt
+
+💥 3. Obsłuż edge-case'y
+Puste inputy.
+
+Niezamknięte cudzysłowy.
+
+Redirekcje bez pliku.
+
+Pipe na końcu.
+
+🧠 4. Parsuj z automatu (automatyzacja)
+Lexer działa jak automat: stan zwykły → w cudzysłowie → po operatorze itp.
+
+🔄 SCHEMAT DZIAŁANIA:
+Wejście: "cat file.txt | grep 'hello' > out.txt"
+
+Lexer:
+
+T_WORD: cat
+
+T_WORD: file.txt
+
+T_PIPE: |
+
+T_WORD: grep
+
+T_WORD: hello
+
+T_REDIRECT_OUT: >
+
+T_WORD: out.txt
+
+Parser:
+
+2 komendy: cat file.txt i grep hello
+
+redirekcja > na drugiej komendzie
+
+
+⚠️ EDGE CASE'Y – LEXING
+1. Spacje i taby
+ls -l
+
+echo hello
+
+echo " a b "
+
+Lexer nie może tworzyć pustych tokenów, nie może zgubić argumentów przez wielokrotne spacje.
+
+2. Niezamknięte cudzysłowy
+echo "Hello
+
+echo 'Hello
+
+Musisz wykryć błąd i zasygnalizować go użytkownikowi, np. syntax error: unclosed quote.
+
+3. Zagnieżdżone lub mieszane cudzysłowy
+echo "'hi'"
+
+echo '"hi"'
+
+echo '"$USER"'
+
+Lexer musi wiedzieć, że string w ' NIE pozwala na $, ale " tak.
+
+4. Redirekcje bez operandów
+ls >
+
+grep <
+
+echo hi >>
+
+Po >, >>, <, << MUSI być plik (token T_WORD). Inaczej: błąd składni.
+
+5. Puste polecenie po pipe
+ls |
+
+| grep hi
+
+cat file | | grep
+
+Pipe nie może być na początku, na końcu ani występować podwójnie.
+
+6. Nieznane operatory
+echo && ls
+
+echo || ls
+
+Te operatory są zarezerwowane w bashu, ale w minishellu ich nie obsługujesz, więc musisz je odrzucić.
+
+7. Tokeny typu >>>, >< itp.
+echo >>> file
+
+echo >< file
+
+Niepoprawna składnia redirekcji – zgłoś syntax error near unexpected token.
+
+8. Puste polecenia / tylko spacje
+
+\t\t
+
+"\t "
+
+Shell nie może się wysypać ani próbować wykonać pustego polecenia.
+
+9. Escape’y (\) – tylko w "
+echo \"hello\" (w " działa)
+
+echo '\"hello\"' (w ' działa literalnie)
+
+echo \a (nie powinno działać, literalnie \a)
+
+Obsługa \ jest uproszczona w minishellu, ale w " warto to ogarnąć (jeśli robisz bonusy).
+
+⚠️ EDGE CASE'Y – PARSING
+1. Redirekcja w złym miejscu
+> file echo hello
+
+cat file.txt < in.txt > out.txt grep hi
+
+Redirekcje muszą dotyczyć polecenia. W drugim przykładzie grep jest niezwiązane z cat, a masz tylko jeden pipe.
+
+2. Wiele redirekcji do tego samego strumienia
+cat < a < b – ostatnia wygrywa
+
+echo hi > a > b – ostatnia wygrywa
+
+Parsuj i nadpisuj, ale zachowaj kolejność do wykonania w executorze.
+
+3. Pusta wartość po ekspansji
+echo $EMPTY (jeśli EMPTY nie istnieje)
+
+cat "$EMPTY"
+
+Musisz upewnić się, że po ekspansji nie tworzysz NULL-owych tokenów ani nie rozbijasz polecenia.
+
+4. Ekspansja w heredoc (nie w ' ')
+cat << EOF z zawartością $USER
+
+W heredocu typu 'EOF' nie ma ekspansji, w EOF – jest.
+
+Trzeba to uwzględnić przy generowaniu danych do pipe().
+
+5. Quote w środku tokena
+echo he"ll"o → hello
+
+echo he'll'o → hello
+
+Musisz skleić tokeny z cudzysłowami.
+
+6. $ przed niealfanumerycznym znakiem
+echo $1
+
+echo $?
+
+echo $
+
+$? OK, $1 – zależnie od implementacji, $ bez niczego – literalnie $.
+
+7. Heredoc z pustym limitem
+cat <<
+
+Brak limitera – syntax error.
+
+✅ CO Z TYM ZROBIĆ?
+Lexer:
+
+Obsłuż wszystkie operatory (>, >>, <, <<, |) jako osobne tokeny.
+
+Parsuj cudzysłowy, nie dzieląc stringów w środku.
+
+Rzucaj błędy przy: brakującym zamknięciu, pustym tokenie po operatorze, nieznanym znaku.
+
+Parser:
+
+Rozpoznawaj i przypisuj redirekcje do właściwego polecenia.
+
+Dziel polecenia na podstawie pipe’ów.
+
+Buduj t_cmd zawierający argv, redirekcje i inne informacje.
+
+Waliduj składnię.
+
+
+
+Podzieliłem całe wejście na tokeny i zapisałem je do tablicy stringów. Na przykład, polecenie "ls -l file | wc -w" zostanie podzielone na:
+[ "ls", "-l", "file", "|", "wc", "-w" ].
+
+Iteruję po tej tablicy aż do napotkania pipe'a (|) i dodaję każdy token do odpowiedniego pola w strukturze listy jednokierunkowej (linked list).
+Mam strukturę t_node, która zawiera zmienne:
+
+char *cmd – dla samej komendy (np. ls)
+
+char **flags – tablicę stringów na flagi (bo może być ich więcej niż jedna, np. -l, -a)
+
+char **args – tablicę stringów na argumenty (np. nazwy plików itp.)
+
+Przechodzę przez tokeny do pierwszego pipe'a i:
+
+ls przypisuję do cmd,
+
+-l do tablicy flags,
+
+file do tablicy args.
+To będzie pierwszy node (węzeł) w liście.
+
+Następnie tworzę nowy węzeł (node) dla części po pipe'ie.
+Kontynuuję iterację po tablicy aż do kolejnego pipe'a (albo końca), dodając tokeny do cmd, flags lub args, zgodnie z tą samą logiką.
+
+Gdy cała lista zostanie wypełniona, zaczynam pracę nad częścią odpowiedzialną za wykonywanie poleceń (execution).
