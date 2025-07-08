@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/07 16:22:07 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/08 10:57:28 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_pars *read_cmd(t_pars *read)
 	read->line = readline("minishell>");
 	if (!read->line)
 		return (NULL);
+	add_history(read->line);
 	return (read);
 }
 //int check_redirect_error(t_cmd *read, int pos)
