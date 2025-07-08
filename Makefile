@@ -6,33 +6,43 @@
 #    By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 19:22:14 by kdyga             #+#    #+#              #
-#    Updated: 2025/07/07 16:00:28 by kikwasni         ###   ########.fr        #
+#    Updated: 2025/07/08 12:49:13 by kikwasni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror -g -I minishell/
-LDFLAGS = -lreadline
 NAME = mini
 
-SRCS = main/main.c Kamil/command/cd.c Kinga/read_line.c
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g -I minishell/ -I libft/includes
+LDFLAGS = -lreadline libft/libft.a
+
+SRCS = main/main.c Kamil/command/cd.c Kinga/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all clean fclean re valgrind
+# Libft
+LIBFT_DIR = libft
+LIBFT_NAME = libft.a
 
-all: $(NAME)
+.PHONY: all clean fclean re valgrind libft
 
-$(NAME): $(OBJS)
+all: libft $(NAME)
+
+$(NAME): $(OBJS) libft/$(LIBFT_NAME)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+libft:
+	$(MAKE) -C $(LIBFT_DIR)
+
 clean:
 	rm -f $(OBJS)
+	$(MAKE) -C $(LIBFT_DIR) clean
 
 fclean: clean
 	rm -f $(NAME)
+	$(MAKE) -C $(LIBFT_DIR) fclean
 
 re: fclean all
 

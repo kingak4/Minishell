@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/07 16:00:53 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:43:56 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,3 +99,38 @@ int main(void)
 	rl_clear_history();
 	return 0;
 }
+
+//int main(void)
+//{
+//    char **tokens;
+//    int i;
+
+//    char *test = "echo \"hello world\" 'this is' a test";
+
+//    tokens = ft_split_mini(test, ' ');
+//    if (!tokens)
+//    {
+//        printf("Błąd alokacji pamięci!\n");
+//        return 1;
+//    }
+
+//    i = 0;
+//    while (tokens[i])
+//    {
+//        printf("Token %d: [%s]\n", i, tokens[i]);
+//        i++;
+//    }
+
+//    i = 0;
+//    while (tokens[i])
+//        free(tokens[i++]);
+//    free(tokens);
+
+//    return 0;
+//}
+//int main()
+//{
+//	char *s =  "            kinga\t\"kinga   kingi\"			";
+//	char *rest = space(s);
+//	printf("%s\n", rest);
+//}

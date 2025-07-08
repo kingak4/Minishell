@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/07 16:21:07 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:07:52 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include "minishell.h"
+#include "../libft/includes/libft.h"
 
 // read_line
 #include <readline/readline.h>
@@ -60,5 +61,8 @@ void ft_exit(char **args);
 
 // parsing
 t_pars *read_cmd(t_pars *read);
+int		quotes_check(char *str);
+char **ft_split_mini(char const *s, char c);
+char	*space(char *s);
 
 #endif
