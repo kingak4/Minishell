@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 12:19:40 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/09 12:42:40 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:31:44 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,13 @@ static size_t	count_token(char const *s, char c)
 	{
 		if (s[i] != c)
 		{
-			count++;
+			if (s[i] == '$')
+			{
+				i++;
+				count++;
+			}
+			else
+				count++;
 			while ((s[i]) && (s[i] != c))
 				i++;
 		}
@@ -57,6 +63,8 @@ static size_t	find_token_end(const char *s, size_t start, char delimiter)
 			else if (quote == s[end])
 				quote = 0;
 		}
+		else if (s[end] == '$' && quote != '\'')
+			break ;
 		end++;
 	}
 	return (end);
@@ -76,7 +84,15 @@ static char	**tk(const char *s, char c, char **result)
 			start++;
 		if (s[start] == '\0')
 			break ;
-		end = find_token_end(s, start, c);
+		if (s[start] == '$')
+		{
+			end = start + 1;
+			result[token_index] = ft_substr(s, start, end - start);
+			token_index += 1;
+			start = end;
+		}
+		else
+			end = find_token_end(s, start, c);
 		result[token_index] = ft_substr(s, start, end - start);
 		if (!result[token_index])
 			return (free_token(result, token_index));
@@ -100,3 +116,19 @@ char	**ft_split_mini(char const *s, char c)
 		return (NULL);
 	return (tk(s, c, result));
 }
+//✅ Co musisz zrobić (logika, nie kod):
+//Jeśli natrafisz na $, to:
+
+//dodaj token z $
+
+//od razu policz drugi token z nazwą zmiennej, np. USER, ale tylko do pierwszego separatora / końca zmiennej
+
+//Czyli $USER powinno dać dwa tokeny: "$" i "USER"
+
+//Po dodaniu $ i USER, nie wywołuj potem jeszcze raz find_token_end, bo już to przeszłaś.
+
+//✳️ Co jeszcze warto poprawić:
+//Twój count_token() zlicza tylko raz $, ale nie osobno $ i USER → to też trzeba poprawić, bo masz teraz count < real_tokens.
+
+//Cudzysłowy " i ' nie powinny być osobnymi tokenami – teraz niestety tak się dzieje.
+
