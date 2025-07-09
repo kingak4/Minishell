@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/08 16:07:52 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/09 11:45:30 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ typedef struct s_pars
 }		t_pars;
 
 //Command
-int ft_echo(char **args);
-int ft_cd(char **args);
-int ft_pwd(void);
-int ft_env(void);
-int ft_export(char **args);
-int ft_unset(char **args);
-void ft_exit(char **args);
+int		ft_echo(char **args);
+int		ft_cd(char **args);
+int		ft_pwd(void);
+int		ft_env(void);
+int		ft_export(char **args);
+int		ft_unset(char **args);
+void	ft_exit(char **args);
 
 // parsing
-t_pars *read_cmd(t_pars *read);
+t_pars	*read_cmd(t_pars *read);
 int		quotes_check(char *str);
-char **ft_split_mini(char const *s, char c);
+char	**ft_split_mini(char const *s, char c);
 char	*space(char *s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/08 16:43:56 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/09 12:37:16 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,25 @@ int minishell_loop(void)
 //    return minishell_loop();
 //}
 
-int main(void)
-{
-	t_pars cmd;
+//int main(void)
+//{
+//	t_pars cmd;
 
-	while (1)
-	{
-		if (!read_cmd(&cmd))
-		{
-			printf("\nKoniec lub blad odczytu. Koncze program.\n");
-			break;
-		}
+//	while (1)
+//	{
+//		if (!read_cmd(&cmd))
+//		{
+//			printf("\nKoniec lub blad odczytu. Koncze program.\n");
+//			break;
+//		}
 
-		printf("Wczytano linie: %s\n", cmd.line);
+//		printf("Wczytano linie: %s\n", cmd.line);
 
-		free(cmd.line);
-	}
-	rl_clear_history();
-	return 0;
-}
+//		free(cmd.line);
+//	}
+//	rl_clear_history();
+//	return 0;
+//}
 
 //int main(void)
 //{
@@ -128,9 +128,9 @@ int main(void)
 
 //    return 0;
 //}
-//int main()
-//{
-//	char *s =  "            kinga\t\"kinga   kingi\"			";
-//	char *rest = space(s);
-//	printf("%s\n", rest);
-//}
+int main()
+{
+	char *s = "hello\t\tworld";
+	char *rest = space(s);
+	printf("%s\n", rest);
+}
