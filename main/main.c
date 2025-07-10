@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/09 16:27:43 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:44:12 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,37 +100,52 @@ int minishell_loop(void)
 //	return 0;
 //}
 
-int main(void)
-{
-    char **tokens;
-    int i;
+//int main(void)
+//{
+//    char **tokens;
+//    int i;
 
-    char *test = "echo \"$USER\" \'this is\' a test";
+//    char *test = "echo   $ \"USER\" \'$this is\' a test";
 
-    tokens = ft_split_mini(test, ' ');
-    if (!tokens)
-    {
-        printf("Błąd alokacji pamięci!\n");
-        return 1;
-    }
+//    tokens = ft_split_mini(test, ' ');
+//    if (!tokens)
+//    {
+//        printf("Błąd alokacji pamięci!\n");
+//        return 1;
+//    }
 
-    i = 0;
-    while (tokens[i])
-    {
-        printf("Token %d: [%s]\n", i, tokens[i]);
-        i++;
-    }
+//    i = 0;
+//    while (tokens[i])
+//    {
+//        printf("Token %d: [%s]\n", i, tokens[i]);
+//        i++;
+//    }
 
-    i = 0;
-    while (tokens[i])
-        free(tokens[i++]);
-    free(tokens);
+//    i = 0;
+//    while (tokens[i])
+//        free(tokens[i++]);
+//    free(tokens);
 
-    return 0;
-}
+//    return 0;
+//}
 //int main()
 //{
 //	char *s = "hello\t\tworld";
 //	char *rest = space(s);
 //	printf("%s\n", rest);
 //}
+//int main()
+//{
+//	char *s = "echo \"$USER\" $ \'$this is\' a test";
+//	int i = is_dollar(s);
+//	printf("%d\n", i);
+//}
+void print_tokens(char **tokens)
+{
+    int i = 0;
+    while (tokens[i])
+    {
+        printf("Token[%d]: '%s'\n", i, tokens[i]);
+        i++;
+    }
+}

@@ -6,129 +6,130 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 12:19:40 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/09 16:31:44 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/10 18:44:18 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static size_t	count_token(char const *s, char c)
+int		sig_quote(char *s)
 {
-	size_t	i;
-	size_t	count;
-
+	int	i;
+	
 	i = 0;
-	count = 0;
-	while (s[i])
+	while (s[i] != '\0')
 	{
-		if (s[i] != c)
-		{
-			if (s[i] == '$')
-			{
-				i++;
-				count++;
-			}
-			else
-				count++;
-			while ((s[i]) && (s[i] != c))
-				i++;
-		}
-		else
-			i++;
+		if (s[i] == '\'')
+			return (1);
+		i++;
 	}
-	return (count);
+	return(0);
 }
 
-static char	**free_token(char **result, size_t token_index)
+int		dub_quote(char *s)
 {
-	while (token_index > 0)
-		free(result[--token_index]);
-	free(result);
-	return (NULL);
-}
-
-static size_t	find_token_end(const char *s, size_t start, char delimiter)
-{
-	char	quote;
-	size_t	end;
-
-	quote = 0;
-	end = start;
-	while (s[end] && (quote || s[end] != delimiter))
+	int	i;
+	int	flag;
+	
+	i = 0;
+	flag = 0;
+	while (s[i] != '\0')
 	{
-		if (s[end] == '\'' || s[end] == '\"')
-		{
-			if (quote == 0)
-				quote = s[end];
-			else if (quote == s[end])
-				quote = 0;
-		}
-		else if (s[end] == '$' && quote != '\'')
-			break ;
-		end++;
+		if (s[i] == '"')
+			flag = 1;
+		i++;
 	}
-	return (end);
+	return(flag);
 }
 
-static char	**tk(const char *s, char c, char **result)
+char	*c_token_in_sig(char *s, size_t *i)
 {
-	size_t	token_index;
 	size_t	start;
 	size_t	end;
+	
+	if (s[*i] != '\'')
+		return (NULL);
+	(*i)++;
+	start = *i;
+	while(s[*i] && s[*i] != '\'')
+		(*i)++;
+	end = *i;
+	if (s[*i] == '\'')
+		(*i)++;
+	return (ft_substr(s, start, end - start));
+}
+char	*token_dolar(char *s, size_t *i)
+{
+	size_t	start;
 
-	start = 0;
-	token_index = 0;
-	while (s[start])
-	{
-		while (s[start] && s[start] == c)
-			start++;
-		if (s[start] == '\0')
-			break ;
-		if (s[start] == '$')
-		{
-			end = start + 1;
-			result[token_index] = ft_substr(s, start, end - start);
-			token_index += 1;
-			start = end;
-		}
-		else
-			end = find_token_end(s, start, c);
-		result[token_index] = ft_substr(s, start, end - start);
-		if (!result[token_index])
-			return (free_token(result, token_index));
-		token_index++;
-		start = end;
-	}
-	result[token_index] = NULL;
-	return (result);
+	if (s[*i] != '$')
+		return (NULL);
+	start = *i;
+	(*i)++;
+	while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
+		(*i)++;
+	if (start + 1 == *i)
+		return (ft_strdup("$"));
+	return (ft_substr(s, start, *i - start));
 }
 
+char	**tk(char *s, char c, char **rest)
+{
+	size_t	i;
+	size_t	token_id;
+	size_t	start;
+
+	s = space(s);
+	i = 0;
+	token_id = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] == c)
+			i++;
+		if (s[i] == '\0')
+			break ;
+		if (s[i] == '\'')
+			rest[token_id++] = c_token_in_sig(s, &i);
+		else if (s[i] == '"')
+		{
+			i++;
+			while (s[i] && s[i] != '"')
+			{
+				if (s[i] == '$')
+					rest[token_id++] = token_dolar(s, &i);
+				else
+				{
+					start = i;
+					while (s[i] && s[i] != '$' && s[i] != '"')
+						i++;
+					rest[token_id++] = ft_substr(s, start, i - start);
+				}
+			}
+			if (s[i] == '"')
+				i++;
+		}
+		else if (s[i] == '$')
+			rest[token_id++] = token_dolar(s, &i);
+		else
+		{
+			start = i;
+			while (s[i] && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
+				i++;
+			if (start < i)
+				rest[token_id++] = ft_substr(s, start, i - start);
+		}
+	}
+	rest[token_id] = NULL;
+	return (rest);
+}
 char	**ft_split_mini(char const *s, char c)
 {
-	size_t	token_count;
-	char	**result;
+	char	**rest;
 
 	if (!s)
 		return (NULL);
-	token_count = count_token(s, c);
-	result = malloc((token_count + 1) * sizeof(char *));
-	if (!result)
+	rest = malloc((ft_strlen(s) + 1) * sizeof(char *));
+	if (!rest)
 		return (NULL);
-	return (tk(s, c, result));
+	return (tk((char *)s, c, rest));
 }
-//✅ Co musisz zrobić (logika, nie kod):
-//Jeśli natrafisz na $, to:
-
-//dodaj token z $
-
-//od razu policz drugi token z nazwą zmiennej, np. USER, ale tylko do pierwszego separatora / końca zmiennej
-
-//Czyli $USER powinno dać dwa tokeny: "$" i "USER"
-
-//Po dodaniu $ i USER, nie wywołuj potem jeszcze raz find_token_end, bo już to przeszłaś.
-
-//✳️ Co jeszcze warto poprawić:
-//Twój count_token() zlicza tylko raz $, ale nie osobno $ i USER → to też trzeba poprawić, bo masz teraz count < real_tokens.
-
-//Cudzysłowy " i ' nie powinny być osobnymi tokenami – teraz niestety tak się dzieje.
-

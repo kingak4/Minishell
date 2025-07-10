@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/09 11:45:30 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/10 13:52:49 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,7 @@ t_pars	*read_cmd(t_pars *read);
 int		quotes_check(char *str);
 char	**ft_split_mini(char const *s, char c);
 char	*space(char *s);
-
+int		sig_quote(char *s);
+int		dub_quote(char *s);
+int		is_dollar(char *s);
 #endif
