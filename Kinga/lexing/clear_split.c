@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 13:43:41 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/10 16:44:21 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/11 13:55:59 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,31 @@ char	*space(char *s)
 	if (!rest)
 		return (NULL);
 	rest = m_rest(s, i, rest, len);
+	return (rest);
+}
+
+char	*remove_hyphens(const char *s)
+{
+	char	*rest;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!s)
+		return (NULL);
+	rest = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!rest)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] != '"')
+		{
+			rest[j] = s[i];
+			j++;
+		}
+		i++;
+	}
+	rest[j] = '\0';
 	return (rest);
 }

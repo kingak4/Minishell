@@ -6,130 +6,97 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 12:19:40 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:18 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:34:16 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int		sig_quote(char *s)
-{
-	int	i;
-	
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '\'')
-			return (1);
-		i++;
-	}
-	return(0);
-}
-
-int		dub_quote(char *s)
-{
-	int	i;
-	int	flag;
-	
-	i = 0;
-	flag = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '"')
-			flag = 1;
-		i++;
-	}
-	return(flag);
-}
-
-char	*c_token_in_sig(char *s, size_t *i)
-{
-	size_t	start;
-	size_t	end;
-	
-	if (s[*i] != '\'')
-		return (NULL);
-	(*i)++;
-	start = *i;
-	while(s[*i] && s[*i] != '\'')
-		(*i)++;
-	end = *i;
-	if (s[*i] == '\'')
-		(*i)++;
-	return (ft_substr(s, start, end - start));
-}
-char	*token_dolar(char *s, size_t *i)
-{
-	size_t	start;
-
-	if (s[*i] != '$')
-		return (NULL);
-	start = *i;
-	(*i)++;
-	while (s[*i] && (ft_isalnum(s[*i]) || s[*i] == '_'))
-		(*i)++;
-	if (start + 1 == *i)
-		return (ft_strdup("$"));
-	return (ft_substr(s, start, *i - start));
-}
-
-char	**tk(char *s, char c, char **rest)
+static size_t	count_token(char const *s, char c)
 {
 	size_t	i;
-	size_t	token_id;
-	size_t	start;
+	size_t	count;
 
-	s = space(s);
 	i = 0;
-	token_id = 0;
-	while (s[i] != '\0')
+	count = 0;
+	while (s[i])
 	{
-		while (s[i] == c)
-			i++;
-		if (s[i] == '\0')
-			break ;
-		if (s[i] == '\'')
-			rest[token_id++] = c_token_in_sig(s, &i);
-		else if (s[i] == '"')
+		if (s[i] != c)
 		{
-			i++;
-			while (s[i] && s[i] != '"')
-			{
-				if (s[i] == '$')
-					rest[token_id++] = token_dolar(s, &i);
-				else
-				{
-					start = i;
-					while (s[i] && s[i] != '$' && s[i] != '"')
-						i++;
-					rest[token_id++] = ft_substr(s, start, i - start);
-				}
-			}
-			if (s[i] == '"')
+			count++;
+			while ((s[i]) && (s[i] != c))
 				i++;
 		}
-		else if (s[i] == '$')
-			rest[token_id++] = token_dolar(s, &i);
 		else
-		{
-			start = i;
-			while (s[i] && s[i] != c && s[i] != '"' && s[i] != '\'' && s[i] != '$')
-				i++;
-			if (start < i)
-				rest[token_id++] = ft_substr(s, start, i - start);
-		}
+			i++;
 	}
-	rest[token_id] = NULL;
-	return (rest);
+	return (count);
 }
+
+static char	**free_token(char **result, size_t token_index)
+{
+	while (token_index > 0)
+		free(result[--token_index]);
+	free(result);
+	return (NULL);
+}
+
+static size_t	find_token_end(const char *s, size_t start, char delimiter)
+{
+	char	quote;
+	size_t	end;
+
+	quote = 0;
+	end = start;
+	while (s[end] && (quote || s[end] != delimiter))
+	{
+		if (s[end] == '\'' || s[end] == '\"')
+		{
+			if (quote == 0)
+				quote = s[end];
+			else if (quote == s[end])
+				quote = 0;
+		}
+		end++;
+	}
+	return (end);
+}
+
+static char	**tk(const char *s, char c, char **result)
+{
+	size_t	token_index;
+	size_t	start;
+	size_t	end;
+
+	start = 0;
+	token_index = 0;
+	while (s[start])
+	{
+		while (s[start] && s[start] == c)
+			start++;
+		if (s[start] == '\0')
+			break ;
+		end = find_token_end(s, start, c);
+		result[token_index] = ft_substr(s, start, end - start);
+		if (!result[token_index])
+			return (free_token(result, token_index));
+		token_index++;
+		start = end;
+	}
+	result[token_index] = NULL;
+	return (result);
+}
+
 char	**ft_split_mini(char const *s, char c)
 {
-	char	**rest;
+	size_t	token_count;
+	char	**result;
 
 	if (!s)
 		return (NULL);
-	rest = malloc((ft_strlen(s) + 1) * sizeof(char *));
-	if (!rest)
+	token_count = count_token(s, c);
+	result = malloc((token_count + 1) * sizeof(char *));
+	if (!result)
 		return (NULL);
-	return (tk((char *)s, c, rest));
+	return (tk(s, c, result));
 }
