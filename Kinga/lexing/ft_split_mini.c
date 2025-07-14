@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 12:19:40 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/11 14:34:16 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:59:54 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	**ft_split_mini(char const *s, char c)
 
 	if (!s)
 		return (NULL);
+	s = space(s);
 	token_count = count_token(s, c);
 	result = malloc((token_count + 1) * sizeof(char *));
 	if (!result)

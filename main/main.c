@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/10 18:44:12 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:34:20 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,35 @@ int minishell_loop(void)
 //	rl_clear_history();
 //	return 0;
 //}
+int main(void)
+{
+	t_pars cmd;
 
+	while (1)
+	{
+		if (!read_cmd(&cmd))
+		{
+			printf("\nKoniec lub blad odczytu. Koncze program.\n");
+			break;
+		}
+
+		if (!check_read(&cmd))
+		{
+			continue;
+		}
+
+		printf("Wczytano linie: %s\n", cmd.line);
+	}
+
+	rl_clear_history();
+	return 0;
+}
 //int main(void)
 //{
 //    char **tokens;
 //    int i;
 
-//    char *test = "echo   $ \"USER\" \'$this is\' a test";
+//    char *test = "echo  $  \"$USER\" \'$this is\' a test";
 
 //    tokens = ft_split_mini(test, ' ');
 //    if (!tokens)
@@ -137,15 +159,6 @@ int minishell_loop(void)
 //int main()
 //{
 //	char *s = "echo \"$USER\" $ \'$this is\' a test";
-//	int i = is_dollar(s);
-//	printf("%d\n", i);
+//	char *rest = remove_hyphens(s);
+//	printf("%s\n", rest);
 //}
-void print_tokens(char **tokens)
-{
-    int i = 0;
-    while (tokens[i])
-    {
-        printf("Token[%d]: '%s'\n", i, tokens[i]);
-        i++;
-    }
-}

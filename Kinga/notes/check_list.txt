@@ -113,3 +113,92 @@
  skrót w Visual Studio aby poprawić kod zgodnie z norminette Control+shift+I
 
 
+🔹 1. Sanity check na wejściu
+ Czy linia wejściowa nie jest pusta po trimie (nie licząc spacji/tabów)?
+
+ Czy wszystkie nawiasy cudzysłowu są domknięte (symetria ', ").
+
+ Czy nie ma nieprawidłowych zakończeń typu:
+
+|, >, < bez argumentu po nich
+
+||, >>>, ><, <| (nieobsługiwane przez minishella)
+
+ Czy liczba metaznaków jest sensowna (|, <, >, <<, >>)
+
+🔹 2. Tokenizacja (ft_split_mini)
+ Czy poprawnie rozdzielasz string na tokeny, uwzględniając:
+
+pojedyncze ' ' (nie interpretuj metaznaków, nawet $)
+
+podwójne " (interpretuj $, ale nie inne metaznaki)
+
+ignorowanie spacji i tabów między tokenami
+
+ Czy traktujesz operatory redirekcji (<, >, <<, >>) i pipe (|) jako osobne tokeny?
+
+ Czy tokeny są poprawnie czyszczone z cudzysłowów (przechowujesz je osobno tylko jeśli trzeba)?
+
+🔹 3. Rozpoznanie redirekcji i ich argumentów
+Dla każdego polecenia:
+
+ Czy redirekcje mają argument (plik/nazwa) bezpośrednio po sobie?
+
+ Czy argumenty redirekcji nie są pipe’ami lub innymi operatorami?
+
+ Czy nie ma wielu redirekcji tego samego typu bez sensu (np. cmd > a > b)?
+
+ Czy << limiter działa bez interpretacji $ w limiterze?
+
+ Czy << z pustym limitem nie powoduje awarii?
+
+🔹 4. Rozdzielenie poleceń względem pipe
+ Czy każde polecenie przed i po | istnieje i zawiera coś do wykonania?
+
+ Czy tworzysz strukturę tablicy t_cmd[], gdzie każdy t_cmd to jedno polecenie między |?
+
+ Czy dla każdego t_cmd przypisujesz:
+
+jego argv (komenda i argumenty)
+
+jego redirekcje (typ + plik docelowy)
+
+info, czy ma pipe do następnego (has_pipe)
+
+🔹 5. Rozpoznanie built-in vs external
+Dla każdego t_cmd:
+
+ Czy sprawdzasz, czy komenda to built-in (echo, cd, pwd, export, unset, env, exit)?
+
+ Czy odpowiednio zaznaczasz to w strukturze (cmd->builtin = BUILTIN_ECHO lub NONE)?
+
+🔹 6. Ekspansja zmiennych środowiskowych
+ Czy wykonujesz ekspansję $VAR wewnątrz cudzysłowów "..." i na zewnątrz, ale nie wewnątrz '...'?
+
+ Czy $? zostaje zamienione na kod wyjścia poprzedniego polecenia?
+
+ Czy brakujące zmienne $NIEISTNIEJE są zamieniane na pusty string?
+
+🔹 7. Finalna walidacja każdego t_cmd przed przekazaniem do egzekucji
+Dla każdego t_cmd:
+
+ Czy argv[0] istnieje? (czy komenda nie jest pusta)
+
+ Czy nie ma błędnych redirekcji (np. brak pliku do redir)?
+
+ Czy wszystkie tokeny są „czyste” (czyli bez śmieci typu niezamknięte cudzysłowy, pipe'y w argumentach itp.)?
+
+ Czy nie przekazujesz pustych tablic argv do execve?
+
+ 🔁 Kolejność działania parsera:
+Czy linia pusta?
+
+Czy cudzysłowy są domknięte?
+
+Czy są nieprawidłowe sekwencje redirekcji?
+
+Czy redirekcje mają cel?
+
+Czy pipe’y są poprawnie użyte?
+
+Dopiero potem: tokenizacja i analiza składniowa

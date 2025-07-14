@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/08 10:57:28 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 11:29:41 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,34 +20,27 @@ t_pars *read_cmd(t_pars *read)
 	read->line = readline("minishell>");
 	if (!read->line)
 		return (NULL);
-	add_history(read->line);
+	if (!is_empty_line(read))
+		add_history(read->line);
 	return (read);
 }
-//int check_redirect_error(t_cmd *read, int pos)
-//{
-//	int count;
-//	int i;
-//	char c;
+t_pars	*check_read(t_pars *read)
+{
+	if(read == NULL ||read->line == NULL)
+		return (NULL);
+	if (!quotes_check(read->line))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	if (!check_redirect_error(read))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	return (read);
+}
 
-//	if (!read || !read->line)
-//		return (0);
-//	count = 0;
-//	i = pos;
-//	c = read->line[pos];
-//	while (read->line[i] && read->line[i] == c)
-//	{
-//		count++;
-//		i++;
-//	}
-//	if (count >= 3)
-//	{
-//		write(2, "minishell: syntax error near unexpected token '", 46);
-//		write(2, &read->line[pos], count);
-//		write(2, "'\n", 2);
-//		return (0);
-//	}
-//	return (1);
-//}
 //t_cmd	*count_redirections(t_cmd *read)
 //{
 //	int	i;
@@ -115,23 +108,3 @@ t_pars *read_cmd(t_pars *read)
 //     }
 
 // }
-//int main(void)
-//{
-//	t_pars cmd;
-
-//	while (1)
-//	{
-//		if (!read_cmd(&cmd))
-//		{
-//			printf("\nKoniec lub blad odczytu. Koncze program.\n");
-//			break;
-//		}
-
-//		printf("Wczytano linie: %s\n", cmd.line);
-
-//		free(cmd.line);
-//	}
-//	rl_clear_history();
-//	return 0;
-//}
-

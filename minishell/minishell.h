@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/10 13:52:49 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 10:43:50 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_redirect
 
 typedef struct s_pars
 {
-	struct pars	*next;
+	struct s_pars	*next;
 	char		*line;
 	char		*cmd;
 	char		*file;
@@ -61,10 +61,15 @@ void	ft_exit(char **args);
 
 // parsing
 t_pars	*read_cmd(t_pars *read);
+t_pars	*check_read(t_pars *read);
 int		quotes_check(char *str);
 char	**ft_split_mini(char const *s, char c);
-char	*space(char *s);
+char	*space(const char *s);
 int		sig_quote(char *s);
 int		dub_quote(char *s);
 int		is_dollar(char *s);
+char	*remove_hyphens(const char *s);
+int		is_empty_line(t_pars *read);
+void	free_list(t_pars *read);
+int		check_redirect_error(t_pars *read);
 #endif

@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 13:43:41 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/11 13:55:59 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:59:02 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	is_s(char c)
 }
 
 //quote = 0;
-char	*m_rest(char *s, int i, char *rest, int len)
+char	*m_rest(const char *s, int i, char *rest, int len)
 {
 	int		j;
 	char	quote;
@@ -49,7 +49,7 @@ char	*m_rest(char *s, int i, char *rest, int len)
 	return (rest);
 }
 
-char	*space(char *s)
+char	*space(const char *s)
 {
 	int		i;
 	int		len;

@@ -6,7 +6,7 @@
 #    By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 19:22:14 by kdyga             #+#    #+#              #
-#    Updated: 2025/07/08 12:49:13 by kikwasni         ###   ########.fr        #
+#    Updated: 2025/07/14 11:28:14 by kikwasni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I minishell/ -I libft/includes
 LDFLAGS = -lreadline libft/libft.a
 
-SRCS = main/main.c Kamil/command/cd.c Kinga/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c
+SRCS = main/main.c Kamil/command/cd.c Kinga/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c Kinga/checkers/check1.c
 OBJS = $(SRCS:.c=.o)
 
 # Libft
