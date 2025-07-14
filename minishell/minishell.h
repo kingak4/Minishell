@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/14 10:43:50 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:50:02 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,9 @@ t_pars	*check_read(t_pars *read);
 int		quotes_check(char *str);
 char	**ft_split_mini(char const *s, char c);
 char	*space(const char *s);
-int		sig_quote(char *s);
-int		dub_quote(char *s);
-int		is_dollar(char *s);
 char	*remove_hyphens(const char *s);
 int		is_empty_line(t_pars *read);
 void	free_list(t_pars *read);
-int		check_redirect_error(t_pars *read);
+int		check_redirect_error(t_pars *read, int count);
+int	is_pipe_first(t_pars *read);
 #endif

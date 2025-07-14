@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/14 11:29:41 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:50:23 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,22 @@ t_pars *read_cmd(t_pars *read)
 		add_history(read->line);
 	return (read);
 }
+
 t_pars	*check_read(t_pars *read)
 {
-	if(read == NULL ||read->line == NULL)
+	if (read == NULL ||read->line == NULL)
 		return (NULL);
 	if (!quotes_check(read->line))
 	{
 		free(read->line);
 		return (NULL);
 	}
-	if (!check_redirect_error(read))
+	if (!check_redirect_error(read, 0))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	if (!is_pipe_first(read))
 	{
 		free(read->line);
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 08:47:46 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/14 11:39:26 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 12:52:21 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_empty_line(t_pars *read)
 	int	i;
 
 	i = 0;
-	if(read == NULL ||read->line == NULL)
+	if (read == NULL || read->line == NULL)
 		return (1);
 	while (read->line[i])
 	{
@@ -27,6 +27,7 @@ int	is_empty_line(t_pars *read)
 	}
 	return (1);
 }
+
 int	quotes_check(char *str)
 {
 	int	i;
@@ -51,12 +52,13 @@ int	quotes_check(char *str)
 	}
 	return (1);
 }
+
 void	free_list(t_pars *read)
 {
 	t_pars	*current;
 	t_pars	*next_node;
 
-	if(read == NULL)
+	if (read == NULL)
 		return ;
 	current = read;
 	while (current != NULL)
@@ -67,16 +69,15 @@ void	free_list(t_pars *read)
 		current = next_node;
 	}
 }
-int	check_redirect_error(t_pars *read)
+
+int	check_redirect_error(t_pars *read, int count)
 {
-	int		count;
 	int		i;
 	int		start;
 	int		len;
 
 	if (!read || !read->line)
 		return (0);
-	count = 0;
 	i = 0;
 	while (read->line[i])
 	{
@@ -95,5 +96,21 @@ int	check_redirect_error(t_pars *read)
 		}
 		i++;
 	}
-		return (1);
+	return (1);
+}
+
+int	is_pipe_first(t_pars *read)
+{
+	int	i;
+
+	i = 0;
+	while (read->line[i] && (read->line[i] == ' ' || read->line[i] == '\t'))
+		i++;
+	if (read->line[i] == '|')
+	{
+		write(2, "minishell: syntax error near unexpected token '|'", 52);
+		write(2, "\n", 2);
+		return (0);
+	}
+	return (1);
 }
