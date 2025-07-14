@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/14 10:34:20 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:49:26 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,73 +14,73 @@
 
 int launch_program(char **args)
 {
-    pid_t pid = fork();
-    if (pid == 0)
-    {
-        // proces dziecka
-        if (execvp(args[0], args) == -1)
-        {
-            perror("minishell");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (pid < 0)
-    {
-        perror("fork");
-    }
-    else
-    {
-        // proces rodzica czeka
-        int status;
-        waitpid(pid, &status, 0);
-    }
-    return 1;
+	pid_t pid = fork();
+	if (pid == 0)
+	{
+		// proces dziecka
+		if (execvp(args[0], args) == -1)
+		{
+			perror("minishell");
+			exit(EXIT_FAILURE);
+		}
+	}
+	else if (pid < 0)
+	{
+		perror("fork");
+	}
+	else
+	{
+		// proces rodzica czeka
+		int status;
+		waitpid(pid, &status, 0);
+	}
+	return 1;
 }
 
 int minishell_loop(void)
 {
-    char input[MAX_INPUT];
-    char *args[MAX_ARGS];
-    int status = 1;
+	char input[MAX_INPUT];
+	char *args[MAX_ARGS];
+	int status = 1;
 
-    while (status)
-    {
-        printf("minishell$ ");
-        if (!fgets(input, sizeof(input), stdin))
-            break;
+	while (status)
+	{
+		printf("minishell$ ");
+		if (!fgets(input, sizeof(input), stdin))
+			break;
 
-        // usuwamy znak nowej linii
-        input[strcspn(input, "\n")] = 0;
+		// usuwamy znak nowej linii
+		input[strcspn(input, "\n")] = 0;
 
-        // dzielimy input na argumenty
-        int i = 0;
-        char *token = strtok(input, " ");
-        while (token && i < MAX_ARGS - 1)
-        {
-            args[i++] = token;
-            token = strtok(NULL, " ");
-        }
-        args[i] = NULL;
+		// dzielimy input na argumenty
+		int i = 0;
+		char *token = strtok(input, " ");
+		while (token && i < MAX_ARGS - 1)
+		{
+			args[i++] = token;
+			token = strtok(NULL, " ");
+		}
+		args[i] = NULL;
 
-        if (args[0] == NULL)
-            continue;
+		if (args[0] == NULL)
+			continue;
 
-        if (strcmp(args[0], "cd") == 0)
-            status = ft_cd(args);
-        else if (strcmp(args[0], "exit") == 0)
-            status = 0;
-        else
-            launch_program(args);
-    }
-    return 0;
+		if (strcmp(args[0], "cd") == 0)
+			status = ft_cd(args);
+		else if (strcmp(args[0], "exit") == 0)
+			status = 0;
+		else
+			launch_program(args);
+	}
+	return 0;
 }
 
-//int main(void)
+// int main(void)
 //{
-//    return minishell_loop();
-//}
+//     return minishell_loop();
+// }
 
-//int main(void)
+// int main(void)
 //{
 //	t_pars cmd;
 
@@ -122,10 +122,10 @@ int main(void)
 	rl_clear_history();
 	return 0;
 }
-//int main(void)
+// int main(void)
 //{
-//    char **tokens;
-//    int i;
+//     char **tokens;
+//     int i;
 
 //    char *test = "echo  $  \"$USER\" \'$this is\' a test";
 
@@ -150,13 +150,13 @@ int main(void)
 
 //    return 0;
 //}
-//int main()
+// int main()
 //{
 //	char *s = "hello\t\tworld";
 //	char *rest = space(s);
 //	printf("%s\n", rest);
 //}
-//int main()
+// int main()
 //{
 //	char *s = "echo \"$USER\" $ \'$this is\' a test";
 //	char *rest = remove_hyphens(s);

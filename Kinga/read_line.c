@@ -6,14 +6,14 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/14 12:50:23 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 14:48:56 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // uzwaj make valgrind 
-t_pars *read_cmd(t_pars *read)
+t_pars	*read_cmd(t_pars *read)
 {
 	if (!read)
 		return (NULL);
@@ -27,7 +27,7 @@ t_pars *read_cmd(t_pars *read)
 
 t_pars	*check_read(t_pars *read)
 {
-	if (read == NULL ||read->line == NULL)
+	if (read == NULL || read->line == NULL)
 		return (NULL);
 	if (!quotes_check(read->line))
 	{
@@ -39,7 +39,8 @@ t_pars	*check_read(t_pars *read)
 		free(read->line);
 		return (NULL);
 	}
-	if (!is_pipe_first(read))
+	if (!is_pipe_first(read) || !is_pipe_last(read)
+		|| !is_double_pipe(read))
 	{
 		free(read->line);
 		return (NULL);

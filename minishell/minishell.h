@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/14 12:50:02 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/14 13:52:28 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,7 @@ char	*remove_hyphens(const char *s);
 int		is_empty_line(t_pars *read);
 void	free_list(t_pars *read);
 int		check_redirect_error(t_pars *read, int count);
-int	is_pipe_first(t_pars *read);
+int		is_pipe_first(t_pars *read);
+int		is_pipe_last(t_pars *read);
+int		is_double_pipe(t_pars *read);
 #endif
