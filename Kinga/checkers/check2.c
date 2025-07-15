@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 13:11:12 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/15 12:33:50 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/15 14:07:34 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,15 @@ int	is_double_pipe(t_pars *read, int i)
 	return (1);
 }
 
-int	is_redi_and_pipe(t_pars *read, int i)
+static int	wrap(void)
 {
-	int	len;
+	write(2,
+		"minishell: syntax error near unexpected token `|'\n", 51);
+	return (0);
+}
 
+int	is_redi_and_pipe(t_pars *read, int i, int len)
+{
 	len = ft_strlen(read->line);
 	while (read->line[i])
 	{
@@ -65,26 +70,25 @@ int	is_redi_and_pipe(t_pars *read, int i)
 		{
 			if (i + 1 < len && read->line[i + 1] == read->line[i])
 				i++;
+			if (read->line[i] == '>' && (i == 0 || read->line[i - 1] != '>')
+				&& i + 1 < len && read->line[i + 1] == '|')
+			{
+				i += 2;
+				continue ;
+			}
 			i++;
-			if (i >= len && read->line[i] == '\0')
-			{
-				write(2,
-					"minishell: syntax error near unexpected token `|'\n", 51);
-				return (0);
-			}
-			while (i >= len && read->line[i] && ft_isspace(read->line[i]))
+			while (i < len && ft_isspace(read->line[i]))
 				i++;
-			if (i >= len && read->line[i] == '|')
-			{
-				write(2,
-					"minishell: syntax error near unexpected token `|'\n", 51);
-				return (0);
-			}
+			if (i < len && read->line[i] == '|')
+				return (wrap());
+			if (i >= len || read->line[i] == '\0')
+				return (wrap());
 		}
 		i++;
 	}
 	return (1);
 }
+
 int	is_redi1_last(t_pars *read)
 {
 	int	i;
@@ -94,7 +98,8 @@ int	is_redi1_last(t_pars *read)
 		i--;
 	if (i >= 0 && (read->line[i] == '>' || read->line[i] == '<'))
 	{
-		write(2, "minishell: syntax error near unexpected token `newline'\n", 58);
+		write(2,
+			"minishell: syntax error near unexpected token `newline'\n", 58);
 		return (0);
 	}
 	return (1);
