@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 08:47:46 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/14 13:37:10 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/15 09:54:15 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	is_pipe_first(t_pars *read)
 		i++;
 	if (read->line[i] == '|')
 	{
-		write(2, "minishell: syntax error near unexpected token `|'", 52);
+		write(2, "minishell: syntax error near unexpected token `|'", 50);
 		write(2, "\n", 2);
 		return (0);
 	}
