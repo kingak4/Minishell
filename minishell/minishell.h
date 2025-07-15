@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/15 09:43:46 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:07:37 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,6 @@ int		check_redirect_error(t_pars *read, int count);
 int		is_pipe_first(t_pars *read);
 int		is_pipe_last(t_pars *read);
 int		is_double_pipe(t_pars *read, int i);
+int		is_redi_and_pipe(t_pars *read, int i);
+int		is_redi1_last(t_pars *read);
 #endif

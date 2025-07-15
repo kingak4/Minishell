@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/15 09:57:59 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/15 12:37:16 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ t_pars	*check_read(t_pars *read)
 		free(read->line);
 		return (NULL);
 	}
-	if (!check_redirect_error(read, 0))
+	if (!check_redirect_error(read, 0) || !is_redi1_last(read)
+		|| !is_redi_and_pipe(read, 0))
+
 	{
 		free(read->line);
 		return (NULL);
@@ -101,17 +103,3 @@ t_pars	*check_read(t_pars *read)
 //	}
 //	return (read);
 //}
-// t_cmd	*check_red(t_cmd *read)
-// {
-//     int i;
-
-//     i = 0;
-//     read->line = read_cmd(read);
-//     if (!read->line)
-//         return (NULL);
-//     while (read->line)
-//     {
-
-//     }
-
-// }
