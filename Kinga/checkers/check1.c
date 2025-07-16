@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 08:47:46 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/15 09:54:15 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:04:37 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,29 +70,29 @@ void	free_list(t_pars *read)
 	}
 }
 
-int	check_redirect_error(t_pars *read, int count)
+int	check_redirect_error(t_pars *read, int i)
 {
-	int		i;
-	int		start;
 	int		len;
 
 	if (!read || !read->line)
 		return (0);
-	i = 0;
 	while (read->line[i])
 	{
-		start = i;
 		if (read->line[i] == '>' || read->line[i] == '<')
-			count++;
-		len = 1;
-		while (read->line[start + len] == read->line[start])
-			len++;
-		if (count >= 3)
 		{
-			write(2, "minishell: syntax error near unexpected token ", 46);
-			write(2, &read->line[start], len);
-			write(2, "\n", 2);
-			return (0);
+			len = 1;
+			while (read->line[i + len] != '\0'
+				&& read->line[i + len] == read->line[i])
+				len++;
+			if (len >= 3)
+			{
+				write(2, "minishell: syntax error near unexpected token ", 46);
+				write(2, &read->line[i], len);
+				write(2, "\n", 2);
+				return (0);
+			}
+			i += len;
+			continue ;
 		}
 		i++;
 	}

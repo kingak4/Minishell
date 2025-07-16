@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 13:11:12 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/15 14:07:34 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/16 10:14:30 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_pipe_last(t_pars *read)
 	i = ft_strlen(read->line) - 1;
 	while (i >= 0 && ft_isspace(read->line[i]))
 		i--;
-	if (read->line[i] == '|')
+	if (i >= 0 && read->line[i] == '|')
 	{
 		write(2, "minishell: syntax error near unexpected token `|'\n", 50);
 		return (0);

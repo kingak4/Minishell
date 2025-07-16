@@ -6,28 +6,26 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/15 14:06:15 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:32:56 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include "minishell.h"
-#include "../libft/includes/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include "minishell.h"
+# include "../libft/includes/libft.h"
+# include <readline/readline.h>
+# include <readline/history.h>
 
-// read_line
-#include <readline/readline.h>
-#include <readline/history.h>
-
-#define MAX_INPUT 1024
-#define MAX_ARGS 64
+# define MAX_INPUT 1024
+# define MAX_ARGS 64
 // in = 1 to jest > in = 2 >> in = 0 brak
 // out = 1 to jest < out = 2 << out  = 0 brak
 typedef struct s_redirect
@@ -36,18 +34,17 @@ typedef struct s_redirect
 	int		out;
 }		t_redirect;
 
-
 typedef struct s_pars
 {
 	struct s_pars	*next;
-	char		*line;
-	char		*cmd;
-	char		*file;
-	char		*flag;
-	int			var;
-	char		*str;
-	int			pip;
-	t_redirect	*redirect;
+	char			*line;
+	char			*cmd;
+	char			*file;
+	char			*flag;
+	int				var;
+	char			*str;
+	int				pip;
+	t_redirect		*redirect;
 }		t_pars;
 
 //Command
@@ -68,10 +65,13 @@ char	*space(const char *s);
 char	*remove_hyphens(const char *s);
 int		is_empty_line(t_pars *read);
 void	free_list(t_pars *read);
-int		check_redirect_error(t_pars *read, int count);
+int		check_redirect_error(t_pars *read, int i);
 int		is_pipe_first(t_pars *read);
 int		is_pipe_last(t_pars *read);
 int		is_double_pipe(t_pars *read, int i);
 int		is_redi_and_pipe(t_pars *read, int i, int len);
 int		is_redi1_last(t_pars *read);
+int		is_double_redi1(t_pars *read, int i, char first);
+int		is_semicolon(t_pars *read);
+int		is_operator(t_pars *read);
 #endif
