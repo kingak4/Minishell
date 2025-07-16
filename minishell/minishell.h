@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/16 12:32:56 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/16 13:45:35 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_pars
 {
 	struct s_pars	*next;
 	char			*line;
+	char			**tokens;
 	char			*cmd;
 	char			*file;
 	char			*flag;
@@ -74,4 +75,6 @@ int		is_redi1_last(t_pars *read);
 int		is_double_redi1(t_pars *read, int i, char first);
 int		is_semicolon(t_pars *read);
 int		is_operator(t_pars *read);
+t_pars	*lex(t_pars *read);
+
 #endif
