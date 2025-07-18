@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 14:11:42 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/16 13:01:51 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:44:16 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	is_semicolon(t_pars *read)
 	{
 		if (read->line[i] == ';')
 		{
-			write(2, "minishell: syntax error near unexpected token `;'\n", 52);
+			write(2, "minishell: syntax error near unexpected token `;'\n", 47);
 			return (0);
 		}
 		i++;
@@ -87,12 +87,12 @@ int	is_operator(t_pars *read)
 		if (read->line[i] == '&' && i + 1 < len && read->line[i + 1] == '&')
 		{
 			write(2,
-				"minishell: syntax error near unexpected token `&&'\n", 53);
+				"minishell: syntax error near unexpected token `&&'\n", 51);
 			return (0);
 		}
 		else if (read->line[i] == '&')
 		{
-			write(2, "minishell: syntax error near unexpected token `&'\n", 52);
+			write(2, "minishell: syntax error near unexpected token `&'\n", 49);
 			return (0);
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/16 13:45:35 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/18 16:28:41 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,8 @@ int		is_double_redi1(t_pars *read, int i, char first);
 int		is_semicolon(t_pars *read);
 int		is_operator(t_pars *read);
 t_pars	*lex(t_pars *read);
+int		is_pipe(t_pars *read);
+t_pars	*new_node(t_pars *read);
+void	is_redi(t_pars *read);
 
 #endif

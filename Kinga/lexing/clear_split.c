@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 13:43:41 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/11 14:59:02 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:39:12 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ char	*space(const char *s)
 	int		len;
 	int		start;
 	char	*rest;
-	int		j;
 
 	i = 0;
-	j = 0;
 	len = ft_strlen(s) - 1;
 	while (is_s(s[i]))
 		i++;

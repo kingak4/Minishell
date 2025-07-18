@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 13:11:12 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/16 10:14:30 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/18 15:40:59 by root             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	is_redi1_last(t_pars *read)
 	if (i >= 0 && (read->line[i] == '>' || read->line[i] == '<'))
 	{
 		write(2,
-			"minishell: syntax error near unexpected token `newline'\n", 58);
+			"minishell: syntax error near unexpected token `newline'\n", 57);
 		return (0);
 	}
 	return (1);
