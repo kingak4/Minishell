@@ -1,12 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isal.c                                          :+:      :+:    :+:   */
+/*   lex.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 18:23:57 by kdyga             #+#    #+#             */
-/*   Updated: 2025/05/09 18:23:58 by kdyga            ###   ########.fr       */
+/*   Created: 2025/07/16 13:04:46 by kikwasni          #+#    #+#             */
+/*   Updated: 2025/07/16 13:44:51 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+
+t_pars	*lex(t_pars *read)
+{
+	if (!check_read(read))
+		return (NULL);
+	read->tokens = ft_split_mini(read->line, ' ');
+	return (read);
+}

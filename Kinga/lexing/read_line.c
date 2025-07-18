@@ -6,48 +6,50 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/08 10:57:28 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/16 12:31:01 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // uzwaj make valgrind 
-t_pars *read_cmd(t_pars *read)
+t_pars	*read_cmd(t_pars *read)
 {
 	if (!read)
 		return (NULL);
 	read->line = readline("minishell>");
 	if (!read->line)
 		return (NULL);
-	add_history(read->line);
+	if (!is_empty_line(read))
+		add_history(read->line);
 	return (read);
 }
-//int check_redirect_error(t_cmd *read, int pos)
-//{
-//	int count;
-//	int i;
-//	char c;
 
-//	if (!read || !read->line)
-//		return (0);
-//	count = 0;
-//	i = pos;
-//	c = read->line[pos];
-//	while (read->line[i] && read->line[i] == c)
-//	{
-//		count++;
-//		i++;
-//	}
-//	if (count >= 3)
-//	{
-//		write(2, "minishell: syntax error near unexpected token '", 46);
-//		write(2, &read->line[pos], count);
-//		write(2, "'\n", 2);
-//		return (0);
-//	}
-//	return (1);
-//}
+t_pars	*check_read(t_pars *read)
+{
+	if (read == NULL || read->line == NULL || ft_strlen(read->line) == 0)
+		return (NULL);
+	if (!quotes_check(read->line) || !is_semicolon(read)
+		|| !is_operator(read))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	if (!check_redirect_error(read, 0) || !is_redi1_last(read)
+		|| !is_redi_and_pipe(read, 0, 0) || !is_double_redi1(read, 0, 0))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	if (!is_pipe_first(read) || !is_pipe_last(read)
+		|| !is_double_pipe(read, 0))
+	{
+		free(read->line);
+		return (NULL);
+	}
+	return (read);
+}
+
 //t_cmd	*count_redirections(t_cmd *read)
 //{
 //	int	i;
@@ -101,37 +103,3 @@ t_pars *read_cmd(t_pars *read)
 //	}
 //	return (read);
 //}
-// t_cmd	*check_red(t_cmd *read)
-// {
-//     int i;
-
-//     i = 0;
-//     read->line = read_cmd(read);
-//     if (!read->line)
-//         return (NULL);
-//     while (read->line)
-//     {
-
-//     }
-
-// }
-//int main(void)
-//{
-//	t_pars cmd;
-
-//	while (1)
-//	{
-//		if (!read_cmd(&cmd))
-//		{
-//			printf("\nKoniec lub blad odczytu. Koncze program.\n");
-//			break;
-//		}
-
-//		printf("Wczytano linie: %s\n", cmd.line);
-
-//		free(cmd.line);
-//	}
-//	rl_clear_history();
-//	return 0;
-//}
-

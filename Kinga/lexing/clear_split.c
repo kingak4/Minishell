@@ -6,36 +6,11 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 13:43:41 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/08 16:38:11 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/11 14:59:02 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int		quotes_check(char *str)
-{
-	int	i;
-	int	flag;
-	int	f;
-
-	i = 0;
-	flag = 0;
-	f = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '"' && f == 0)
-			flag = !flag;
-		else if (str[i] == '\'' && flag == 0)
-			f = !f;
-		i++;
-	}
-	if (flag || f)
-	{
-		printf("syntax error: unclosed quote\n");
-		return 0;
-	}
-	return (1);
-}
 
 static int	is_s(char c)
 {
@@ -43,25 +18,14 @@ static int	is_s(char c)
 		return (1);
 	return (0);
 }
-char	*space(char *s)
-{
-	int		i = 0;
-	int		len;
-	char	quote = 0;
-	int		start;
-	char	*rest;
-	int		j = 0;
 
-	len = ft_strlen(s) - 1;
-	while (is_s(s[i]))
-		i++;
-	start = i;
-	while (len > start && is_s(s[len]))
-		len--;
-	rest = malloc(sizeof(char) * (len - start + 2));
-	if (!rest)
-		return (NULL);
-	i = start;
+//quote = 0;
+char	*m_rest(const char *s, int i, char *rest, int len)
+{
+	int		j;
+	char	quote;
+
+	j = 0;
 	while (i <= len)
 	{
 		if (s[i] == '\'' || s[i] == '\"')
@@ -80,6 +44,56 @@ char	*space(char *s)
 		}
 		else
 			rest[j++] = s[i++];
+	}
+	rest[j] = '\0';
+	return (rest);
+}
+
+char	*space(const char *s)
+{
+	int		i;
+	int		len;
+	int		start;
+	char	*rest;
+	int		j;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(s) - 1;
+	while (is_s(s[i]))
+		i++;
+	start = i;
+	while (len > start && is_s(s[len]))
+		len--;
+	i = start;
+	rest = malloc(sizeof(char) * (len - start + 2));
+	if (!rest)
+		return (NULL);
+	rest = m_rest(s, i, rest, len);
+	return (rest);
+}
+
+char	*remove_hyphens(const char *s)
+{
+	char	*rest;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!s)
+		return (NULL);
+	rest = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!rest)
+		return (NULL);
+	while (s[i])
+	{
+		if (s[i] != '"')
+		{
+			rest[j] = s[i];
+			j++;
+		}
+		i++;
 	}
 	rest[j] = '\0';
 	return (rest);
