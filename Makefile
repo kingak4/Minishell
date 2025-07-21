@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: root <root@student.42.fr>                  +#+  +:+       +#+         #
+#    By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 19:22:14 by kdyga             #+#    #+#              #
-#    Updated: 2025/07/18 15:45:10 by root             ###   ########.fr        #
+#    Updated: 2025/07/21 16:48:01 by kikwasni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I minishell/ -I libft/includes
 LDFLAGS = -lreadline libft/libft.a
 
-SRCS = main/main.c Kamil/command/cd.c Kinga/lexing/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c Kinga/lexing/lex.c Kinga/checkers/check1.c Kinga/checkers/check2.c Kinga/checkers/check3.c Kinga/parsing/pars1.c
+SRCS = main/main.c Kamil/command/cd.c Kinga/lexing/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c Kinga/lexing/lex.c Kinga/checkers/check1.c Kinga/checkers/check2.c Kinga/checkers/check3.c Kinga/parsing/pars1.c Kinga/lexing/free_code.c Kinga/parsing/pars2.c
 OBJS = $(SRCS:.c=.o)
 
 # Libft

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/18 16:30:20 by root             ###   ########.fr       */
+/*   Updated: 2025/07/21 17:19:12 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,11 @@ int minishell_loop(void)
 //}
 // int main()
 //{
-//	char *s = "hello\t\tworld";
+//	char *s = " 														\'        kd\'";
 //	char *rest = space(s);
 //	printf("%s\n", rest);
 //}
+
 // int main()
 //{
 //	char *s = "echo \"$USER\" $ \'$this is\' a test";
@@ -270,60 +271,85 @@ int minishell_loop(void)
 
 //     return 0;
 // }
+//int	main(void)
+//{
+//	t_pars	*read;
+//	int		i;
+
+//	read = init_pars(NULL);
+//	if (!read)
+//		return (1);
+
+//	if (read_cmd(read) && lex(read))
+//	{
+//		printf("Tokens:\n");
+//		i = 0;
+//		while (read->tokens && read->tokens[i])
+//		{
+//			printf("[%s]\n", read->tokens[i]);
+//			i++;
+//		}
+//		free_tab(read->tokens);
+//		read->tokens = NULL;
+//	}
+//	//free(read->line);
+//	read->line = NULL;
+
+//	// czyszczenie końcowe
+//	free_pars(read);
+//	rl_clear_history();
+//	rl_free_line_state();
+
+//	return (0);
 int	main(void)
 {
-	t_pars	cmd;
-	int		i;
+	t_pars	*cmd;
 
-	// Inicjalizacja pól struktury
-	cmd.tokens = NULL;
-	cmd.next = NULL;
-	cmd.pip = 0;
-	cmd.line = NULL;
-	cmd.redirect = calloc(1, sizeof(t_redirect)); // WAŻNE: inicjalizacja struktury redirect
-
-	// Pobranie inputu
-	cmd.line = readline("minishell> ");
-	if (!cmd.line)
+	while (1)
 	{
-		printf("Brak inputu. Kończę program.\n");
-		return (1);
+		cmd = init_pars(NULL);
+		if (!cmd)
+			break;
+
+		if (!read_cmd(cmd))
+		{
+			printf("\nKoniec lub błąd odczytu. Kończę program.\n");
+			free_list(cmd);
+			break;
+		}
+
+		// lex zwraca NULL przy błędzie, ale nie zwalnia pamięci, więc musimy to zrobić w main
+		if (!lex(cmd))
+		{
+			free_list(cmd);
+			continue;
+		}
+
+		is_redi(cmd);
+		cmd->pip = is_pipe(cmd);
+
+		printf("Wczytano: %s\n", cmd->line);
+		if (cmd->tokens)
+		{
+			for (int i = 0; cmd->tokens[i]; i++)
+				printf("  [%d]: %s\n", i, cmd->tokens[i]);
+		}
+
+		if (cmd->redirect)
+		{
+			printf("Redirekcje:\n");
+			printf("  >  : %d\n", cmd->redirect->r_in);
+			printf("  >> : %d\n", cmd->redirect->r_app);
+			printf("  <  : %d\n", cmd->redirect->r_out);
+			printf("  << : %d\n", cmd->redirect->r_hdoc);
+		}
+
+		if (cmd->pip)
+			printf("Zawiera pipe'y.\n");
+
+		free_list(cmd);
 	}
 
-	// Tokenizacja (tu możesz podmienić na własną funkcję)
-	if (!lex(&cmd))
-	{
-		printf("Błąd podczas tokenizacji.\n");
-		free(cmd.line);
-		return (1);
-	}
-
-	// Wypisz tokeny
-	printf("Tokeny:\n");
-	i = 0;
-	while (cmd.tokens && cmd.tokens[i])
-	{
-		printf("  [%d]: %s\n", i, cmd.tokens[i]);
-		i++;
-	}
-
-	// Sprawdzenie redirekcji
-	is_redi(&cmd);
-
-	printf("\n🎯 Wykryto redirekcje:\n");
-	printf("IN:  %d \n", cmd.redirect->in);
-	printf("OUT: %d \n", cmd.redirect->out);
-
-	// Czyszczenie
-	free(cmd.line);
-	i = 0;
-	while (cmd.tokens && cmd.tokens[i])
-		free(cmd.tokens[i++]);
-	free(cmd.tokens);
-	free(cmd.redirect);
-	if (cmd.next)
-		free(cmd.next);
 	rl_clear_history();
-
 	return (0);
 }

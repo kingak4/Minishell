@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 08:47:46 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/16 12:04:37 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:41:13 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,7 @@ void	free_list(t_pars *read)
 	while (current != NULL)
 	{
 		next_node = current->next;
-		free(current->line);
-		free(current);
+		free_pars(current);
 		current = next_node;
 	}
 }

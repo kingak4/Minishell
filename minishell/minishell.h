@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/18 16:28:41 by root             ###   ########.fr       */
+/*   Updated: 2025/07/21 16:48:13 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@
 
 # define MAX_INPUT 1024
 # define MAX_ARGS 64
-// in = 1 to jest > in = 2 >> in = 0 brak
-// out = 1 to jest < out = 2 << out  = 0 brak
+// r_in = 1 to jest > r_app = 1 >> lub  = 0 brak
+// r_out = 1 to jest < r_hdoc = 1 << lub  = 0 brak
 typedef struct s_redirect
 {
-	int		in;
-	int		out;
+	int		r_in;
+	int		r_out;
+	int		r_app;
+	int		r_hdoc;
 }		t_redirect;
 
 typedef struct s_pars
@@ -40,8 +42,8 @@ typedef struct s_pars
 	char			*line;
 	char			**tokens;
 	char			*cmd;
-	char			*file;
-	char			*flag;
+	char			**file;
+	char			**flag;
 	int				var;
 	char			*str;
 	int				pip;
@@ -79,5 +81,9 @@ t_pars	*lex(t_pars *read);
 int		is_pipe(t_pars *read);
 t_pars	*new_node(t_pars *read);
 void	is_redi(t_pars *read);
-
+char	**free_token(char **result, size_t token_index);
+void	free_tab(char **splited);
+t_pars	*init_pars(t_pars *read);
+void	free_pars(t_pars *read);
+int		check_flag(t_pars *read);
 #endif
