@@ -3,99 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/07 16:00:53 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/21 01:20:15 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int launch_program(char **args)
+static t_two	*convert_to_t_two(t_pars *pars)
 {
-    pid_t pid = fork();
-    if (pid == 0)
+	t_two	*cmd;
+
+	cmd = malloc(sizeof(t_two));
+	if (!cmd)
+		return (NULL);
+	cmd->cmd = pars->cmd;
+	cmd->args = pars->tokens;
+	cmd->redirect = NULL;
+	cmd->next = NULL;
+	return (cmd);
+}
+
+void execute(t_two **cmd, t_mini *shell)
+{
+    if (!cmd || !*cmd)
+        return;
+
+    if (is_builtin((*cmd)->cmd))
     {
-        // proces dziecka
-        if (execvp(args[0], args) == -1)
-        {
-            perror("minishell");
-            exit(EXIT_FAILURE);
-        }
-    }
-    else if (pid < 0)
-    {
-        perror("fork");
+        exec_builtin((*cmd)->args, shell);
     }
     else
     {
-        // proces rodzica czeka
-        int status;
-        waitpid(pid, &status, 0);
-    }
-    return 1;
-}
-
-int minishell_loop(void)
-{
-    char input[MAX_INPUT];
-    char *args[MAX_ARGS];
-    int status = 1;
-
-    while (status)
-    {
-        printf("minishell$ ");
-        if (!fgets(input, sizeof(input), stdin))
-            break;
-
-        // usuwamy znak nowej linii
-        input[strcspn(input, "\n")] = 0;
-
-        // dzielimy input na argumenty
-        int i = 0;
-        char *token = strtok(input, " ");
-        while (token && i < MAX_ARGS - 1)
+        pid_t pid = fork();
+        if (pid == 0)
         {
-            args[i++] = token;
-            token = strtok(NULL, " ");
+            exec_external((*cmd)->args, shell->envp);
+            perror("exec_external");
+            exit(EXIT_FAILURE);
         }
-        args[i] = NULL;
-
-        if (args[0] == NULL)
-            continue;
-
-        if (strcmp(args[0], "cd") == 0)
-            status = ft_cd(args);
-        else if (strcmp(args[0], "exit") == 0)
-            status = 0;
+        else if (pid > 0)
+        {
+            waitpid(pid, NULL, 0);
+        }
         else
-            launch_program(args);
+        {
+            perror("fork");
+        }
     }
-    return 0;
 }
-
-//int main(void)
-//{
-//    return minishell_loop();
-//}
-
-int main(void)
+int	main(int argc, char **argv, char **envp)
 {
-	t_pars cmd;
+	t_pars	cmd_pars;
+	t_two	*cmd_two;
+	t_mini	shell;
 
+	(void)argc;
+	(void)argv;
+	shell.envp = envp;
+	shell.stdin_copy = dup(STDIN_FILENO);
+	shell.stdout_copy = dup(STDOUT_FILENO);
+	shell.last_exit_code = 0;
 	while (1)
 	{
-		if (!read_cmd(&cmd))
+		cmd_pars.line = NULL;
+		cmd_pars.tokens = NULL;
+		cmd_pars.cmd = NULL;
+		cmd_pars.next = NULL;
+		cmd_pars.pip = 0;
+		if (!read_cmd(&cmd_pars))
+			break ;
+		if (!check_read(&cmd_pars))
 		{
-			printf("\nKoniec lub blad odczytu. Koncze program.\n");
-			break;
+			free(cmd_pars.line);
+			continue ;
 		}
-
-		printf("Wczytano linie: %s\n", cmd.line);
-
-		free(cmd.line);
+		lex(&cmd_pars);
+		cmd_two = convert_to_t_two(&cmd_pars);
+		if (!cmd_two)
+			continue ;
+		execute(&cmd_two, &shell);
+		free(cmd_pars.line);
+		free(cmd_two);
+		rl_clear_history();
 	}
-	rl_clear_history();
-	return 0;
+	return (0);
 }
