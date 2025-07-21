@@ -6,12 +6,11 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:46:15 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/20 22:40:08 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/21 20:33:55 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	is_builtin(const char *cmd)
 {

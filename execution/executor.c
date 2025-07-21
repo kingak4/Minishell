@@ -6,12 +6,11 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:22:20 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/21 01:52:49 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/21 20:34:34 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void free_double_array(char **arr)
 {

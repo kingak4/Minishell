@@ -6,7 +6,7 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/21 01:20:15 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/21 20:53:29 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ static t_two	*convert_to_t_two(t_pars *pars)
 	cmd = malloc(sizeof(t_two));
 	if (!cmd)
 		return (NULL);
-	cmd->cmd = pars->cmd;
 	cmd->args = pars->tokens;
+	cmd->cmd = cmd->args[0];
 	cmd->redirect = NULL;
 	cmd->next = NULL;
+	cmd->str = NULL;
 	return (cmd);
 }
 
