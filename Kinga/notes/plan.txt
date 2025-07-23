@@ -1,15 +1,13 @@
 Taski do ogarnięcia:
 
-1. Ogarnąć splitowanie bez dzielenia po spacjach.
+1. Ogarnąć przekazywanie plików (redirekcje).
 
-2. Ogarnąć przekazywanie plików (redirekcje).
+2. Ogarnąć przekazywanie flag.
 
-3. Ogarnąć przekazywanie flag.
+3. Ogarnąć przekazywanie komend.
 
-4. Ogarnąć przekazywanie komend.
+4. Ogarnąć przekazywanie wartości w komendach i z $.
 
-6. Ogarnąć przekazywanie wartości w komendach i z $.
+5. Sygnały
 
-7. Sygnały
-
-8. Ogarnąć norminette i pilnować valgrind.
+6. Ogarnąć norminette i pilnować valgrind.

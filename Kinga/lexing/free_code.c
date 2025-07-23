@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:51:17 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/22 09:35:01 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:11:07 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_list(t_pars *read)
 	}
 }
 
-char	*remove_hyphens(const char *s)
+char	*remove_hyphens(char *s)
 {
 	char	*rest;
 	int		i;

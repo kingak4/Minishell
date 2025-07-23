@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/23 11:39:26 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:43:17 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -301,82 +301,145 @@ int minishell_loop(void)
 //	rl_free_line_state();
 
 //	return (0);
-int	main(void)
-{
-	t_pars	*cmd;
-
-	while (1)
-	{
-		cmd = init_pars(NULL);
-		if (!cmd)
-			break;
-
-		if (!read_cmd(cmd))
-		{
-			printf("\nKoniec lub błąd odczytu. Kończę program.\n");
-			free_list(cmd);
-			break;
-		}
-
-		if (!lex(cmd))
-		{
-			free_list(cmd);
-			continue;
-		}
-
-		is_redi(cmd);
-		cmd->pip = is_pipe(cmd);
-
-		printf("Wczytano: %s\n", cmd->line);
-		if (cmd->tokens)
-		{
-			for (int i = 0; cmd->tokens[i]; i++)
-				printf("  [%d]: %s\n", i, cmd->tokens[i]);
-		}
-
-		if (cmd->redirect)
-		{
-			printf("Redirekcje:\n");
-			printf("  >  : %d\n", cmd->redirect->r_in);
-			printf("  >> : %d\n", cmd->redirect->r_app);
-			printf("  <  : %d\n", cmd->redirect->r_out);
-			printf("  << : %d\n", cmd->redirect->r_hdoc);
-		}
-
-		if (cmd->pip)
-			printf("Zawiera pipe'y.\n");
-
-		free_list(cmd);
-	}
-
-	rl_clear_history();
-	return (0);
-}
 //int	main(void)
 //{
-//	t_pars	read;
-//	char	*test_str = strdup("cd>>ls<<echocat|grep");
+//	t_pars	*cmd;
 
-//	if (!test_str)
+//	while (1)
 //	{
-//		perror("strdup");
-//		return (1);
+//		cmd = init_pars(NULL);
+//		if (!cmd)
+//			break;
+
+//		if (!read_cmd(cmd))
+//		{
+//			printf("\nKoniec lub błąd odczytu. Kończę program.\n");
+//			free_list(cmd);
+//			break;
+//		}
+
+//		if (!lex(cmd))
+//		{
+//			free_list(cmd);
+//			continue;
+//		}
+
+//		is_redi(cmd);
+//		cmd->pip = is_pipe(cmd);
+
+//		printf("Wczytano: %s\n", cmd->line);
+//		if (cmd->tokens)
+//		{
+//			for (int i = 0; cmd->tokens[i]; i++)
+//				printf("  [%d]: %s\n", i, cmd->tokens[i]);
+//		}
+
+//		if (cmd->redirect)
+//		{
+//			printf("Redirekcje:\n");
+//			printf("  >  : %d\n", cmd->redirect->r_in);
+//			printf("  >> : %d\n", cmd->redirect->r_app);
+//			printf("  <  : %d\n", cmd->redirect->r_out);
+//			printf("  << : %d\n", cmd->redirect->r_hdoc);
+//		}
+
+//		if (cmd->pip)
+//			printf("Zawiera pipe'y.\n");
+//		if (flag_checker(cmd))
+//			printf("zwrócil 1\n");
+//		else
+//			printf("zwrócił 0\n");
+//		if (flag_checker(cmd))
+//			printf("Zwrócił 1 – znaleziono flagi\n");
+			
+//	if (flag_pars(cmd))
+//	{
+//		printf("Flagi:\n");
+//		for (int i = 0; cmd->flags && cmd->flags[i]; i++)
+//		printf("  [flag %d]: %s\n", i, cmd->flags[i]);
+		
+//		printf("Tokeny po usunięciu flag:\n");
+//		for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
+//		printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
 //	}
-
-//	read.line = test_str;
-//	read.spc_pos = -1;
-//	read.spc_mask = 0;
-
-//	printf("Before: \"%s\"\n", read.line);
-
-//	// Wywołanie funkcji do dodania spacji wokół operatorów
-//	read.line = final_space(&read);
-
-//	if (read.line)
-//		printf("After:  \"%s\"\n", read.line);
 //	else
-//		printf("Error in final_space\n");
-
-//	free(read.line);
+//		printf("Błąd podczas parsowania flag.\n");
+//	}
+//	free_list(cmd);
+//	rl_clear_history();
 //	return (0);
 //}
+int main(void)
+{
+    t_pars *cmd = NULL;
+
+    while (1)
+    {
+        if (cmd)
+        {
+            free_list(cmd);
+            cmd = NULL;
+        }
+
+        cmd = init_pars(NULL);
+        if (!cmd)
+            break;
+
+        if (!read_cmd(cmd))
+        {
+            printf("\nKoniec lub błąd odczytu. Kończę program.\n");
+            break;
+        }
+
+        if (!lex(cmd))
+            continue;
+
+        is_redi(cmd);
+        cmd->pip = is_pipe(cmd);
+
+        printf("Wczytano: %s\n", cmd->line);
+        if (cmd->tokens)
+        {
+            for (int i = 0; cmd->tokens[i]; i++)
+                printf("  [%d]: %s\n", i, cmd->tokens[i]);
+        }
+
+        if (cmd->redirect)
+        {
+            printf("Redirekcje:\n");
+            printf("  >  : %d\n", cmd->redirect->r_out);
+            printf("  >> : %d\n", cmd->redirect->r_app);
+            printf("  <  : %d\n", cmd->redirect->r_in);
+            printf("  << : %d\n", cmd->redirect->r_hdoc);
+        }
+
+        if (cmd->pip)
+            printf("Zawiera pipe'y.\n");
+
+        int flags_found = flag_checker(cmd);
+        if (flags_found)
+        {
+            printf("Znaleziono flagi\n");
+        }
+        else
+            printf("Nie znaleziono flag\n");
+
+        if (flags_found && flag_pars(cmd))
+        {
+            printf("Flagi:\n");
+            for (int i = 0; cmd->flags && cmd->flags[i]; i++)
+                printf("  [flag %d]: %s\n", i, cmd->flags[i]);
+
+            printf("Tokeny po usunięciu flag:\n");
+            for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
+                printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
+        }
+        else if (flags_found)
+            printf("Błąd podczas parsowania flag.\n");
+    }
+    if (cmd)
+        free_list(cmd);
+
+    rl_clear_history();
+    return 0;
+}

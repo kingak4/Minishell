@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/23 11:29:35 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 14:29:09 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_pars
 	char			**tokens;
 	char			*cmd;
 	char			**file;
-	char			**flag;
+	char			**flags;
 	int				var;
 	char			*str;
 	int				pip;
@@ -67,7 +67,7 @@ t_pars	*check_read(t_pars *read);
 int		quotes_check(char *str);
 char	**ft_split_mini(char const *s, char c);
 char	*space(const char *s);
-char	*remove_hyphens(const char *s);
+char	*remove_hyphens(char *s);
 int		is_empty_line(t_pars *read);
 void	free_list(t_pars *read);
 int		check_redirect_error(t_pars *read, int i);
@@ -95,5 +95,6 @@ void	add_spaces_around_operators(t_pars *read);
 char	*insert_spaces(char *line, int pos, int mask, int op_len);
 int		is_meta(char c);
 char	*normalize_input(const char *s, int i, int j, char quote);
-char	update_quote(char c, char quote);
+int		flag_checker(t_pars *read);
+t_pars	*flag_pars(t_pars *read);
 #endif
