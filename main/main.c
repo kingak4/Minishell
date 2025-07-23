@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/21 17:19:12 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:39:26 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,6 @@ int	main(void)
 			break;
 		}
 
-		// lex zwraca NULL przy błędzie, ale nie zwalnia pamięci, więc musimy to zrobić w main
 		if (!lex(cmd))
 		{
 			free_list(cmd);
@@ -353,3 +352,31 @@ int	main(void)
 	rl_clear_history();
 	return (0);
 }
+//int	main(void)
+//{
+//	t_pars	read;
+//	char	*test_str = strdup("cd>>ls<<echocat|grep");
+
+//	if (!test_str)
+//	{
+//		perror("strdup");
+//		return (1);
+//	}
+
+//	read.line = test_str;
+//	read.spc_pos = -1;
+//	read.spc_mask = 0;
+
+//	printf("Before: \"%s\"\n", read.line);
+
+//	// Wywołanie funkcji do dodania spacji wokół operatorów
+//	read.line = final_space(&read);
+
+//	if (read.line)
+//		printf("After:  \"%s\"\n", read.line);
+//	else
+//		printf("Error in final_space\n");
+
+//	free(read.line);
+//	return (0);
+//}

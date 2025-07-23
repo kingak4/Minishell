@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 12:19:40 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/21 11:53:44 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:30:42 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,16 @@ char	**ft_split_mini(char const *s, char c)
 {
 	size_t	token_count;
 	char	**result;
+	char	*normalized;
 	char	*tmp;
 
 	if (!s)
 		return (NULL);
-	tmp = space(s);
+	normalized = normalize_input(s, 0, 0, 0);
+	if (!normalized)
+		return (NULL);
+	tmp = space(normalized);
+	free(normalized);
 	if (!tmp)
 		return (NULL);
 	token_count = count_token(tmp, c);

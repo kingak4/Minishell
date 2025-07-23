@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:51:17 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/21 14:46:52 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:35:01 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ void	free_tab(char **splited)
 		i++;
 	}
 	free(splited);
+}
+
+void	free_list(t_pars *read)
+{
+	t_pars	*current;
+	t_pars	*next_node;
+
+	if (read == NULL)
+		return ;
+	current = read;
+	while (current != NULL)
+	{
+		next_node = current->next;
+		free_pars(current);
+		current = next_node;
+	}
 }
 
 char	*remove_hyphens(const char *s)

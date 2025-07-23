@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/21 16:48:13 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/23 11:29:35 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_pars
 	char			*str;
 	int				pip;
 	t_redirect		*redirect;
+	int				spc_pos;
+	int				spc_mask;
 }		t_pars;
 
 //Command
@@ -86,4 +88,12 @@ void	free_tab(char **splited);
 t_pars	*init_pars(t_pars *read);
 void	free_pars(t_pars *read);
 int		check_flag(t_pars *read);
+int		find_operator(t_pars *read, char *op, int start);
+int		check_ops_with_spaces(t_pars *read, int i);
+int		check_operator_spaces(t_pars *read, int pos, int op_len);
+void	add_spaces_around_operators(t_pars *read);
+char	*insert_spaces(char *line, int pos, int mask, int op_len);
+int		is_meta(char c);
+char	*normalize_input(const char *s, int i, int j, char quote);
+char	update_quote(char c, char quote);
 #endif

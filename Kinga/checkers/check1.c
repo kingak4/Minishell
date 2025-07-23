@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/14 08:47:46 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/21 14:41:13 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/22 09:34:37 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,6 @@ int	quotes_check(char *str)
 		return (0);
 	}
 	return (1);
-}
-
-void	free_list(t_pars *read)
-{
-	t_pars	*current;
-	t_pars	*next_node;
-
-	if (read == NULL)
-		return ;
-	current = read;
-	while (current != NULL)
-	{
-		next_node = current->next;
-		free_pars(current);
-		current = next_node;
-	}
 }
 
 int	check_redirect_error(t_pars *read, int i)
