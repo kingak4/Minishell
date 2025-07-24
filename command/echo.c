@@ -6,7 +6,7 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/07 22:33:20 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/07 23:31:52 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/24 00:36:01 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	ft_echo(char **args)
 {
-	int	i = 1;
-	int	newline = 1;
+	int	i;
+	int	newline;
 
+	i = 1;
+	newline = 1;
 	if (args[i] && !ft_strcmp(args[i], "-n"))
 	{
 		newline = 0;

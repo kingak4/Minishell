@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_split.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: root <root@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 13:43:41 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/18 15:39:12 by root             ###   ########.fr       */
+/*   Updated: 2025/07/24 00:24:45 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_s(char c)
 	return (0);
 }
 
-//quote = 0;
+// quote = 0;
 char	*m_rest(const char *s, int i, char *rest, int len)
 {
 	int		j;

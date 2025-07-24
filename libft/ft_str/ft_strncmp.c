@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
+/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 09:48:33 by kdyga             #+#    #+#             */
-/*   Updated: 2024/03/12 19:10:19 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/16 14:55:22 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
 /*
 int main()
 {

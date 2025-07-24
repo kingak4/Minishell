@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   read_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 11:16:31 by root              #+#    #+#             */
-/*   Updated: 2025/07/16 12:31:01 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/24 00:24:35 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// uzwaj make valgrind 
+// uzwaj make valgrind
 t_pars	*read_cmd(t_pars *read)
 {
 	if (!read)
@@ -29,8 +29,7 @@ t_pars	*check_read(t_pars *read)
 {
 	if (read == NULL || read->line == NULL || ft_strlen(read->line) == 0)
 		return (NULL);
-	if (!quotes_check(read->line) || !is_semicolon(read)
-		|| !is_operator(read))
+	if (!quotes_check(read->line) || !is_semicolon(read) || !is_operator(read))
 	{
 		free(read->line);
 		return (NULL);
@@ -41,8 +40,7 @@ t_pars	*check_read(t_pars *read)
 		free(read->line);
 		return (NULL);
 	}
-	if (!is_pipe_first(read) || !is_pipe_last(read)
-		|| !is_double_pipe(read, 0))
+	if (!is_pipe_first(read) || !is_pipe_last(read) || !is_double_pipe(read, 0))
 	{
 		free(read->line);
 		return (NULL);
@@ -50,7 +48,7 @@ t_pars	*check_read(t_pars *read)
 	return (read);
 }
 
-//t_cmd	*count_redirections(t_cmd *read)
+// t_cmd	*count_redirections(t_cmd *read)
 //{
 //	int	i;
 
@@ -78,7 +76,7 @@ t_pars	*check_read(t_pars *read)
 //	}
 //	return (read);
 //}
-//t_cmd *parse_redirect(t_cmd *read, int pos)
+// t_cmd *parse_redirect(t_cmd *read, int pos)
 //{
 //	int size;
 //	int i;

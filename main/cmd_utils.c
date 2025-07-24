@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 18:45:13 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/16 14:48:27 by kikwasni         ###   ########.fr       */
+/*   Created: 2025/07/24 01:31:58 by kdyga             #+#    #+#             */
+/*   Updated: 2025/07/24 01:32:01 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	*ft_calloc(size_t count, size_t size)
+t_two	*convert_to_t_two(t_pars *pars)
 {
-	char	*space;
-	size_t	i;
+	t_two	*cmd;
 
-	i = 0;
-	space = malloc(size * count + 1);
-	if (!(space))
+	cmd = malloc(sizeof(t_two));
+	if (!cmd)
 		return (NULL);
-	while (i < count * size + 1)
-		space[i++] = '\0';
-	return (space);
+	cmd->args = pars->tokens;
+	cmd->cmd = cmd->args[0];
+	cmd->redirect = NULL;
+	cmd->next = NULL;
+	cmd->str = NULL;
+	return (cmd);
 }
