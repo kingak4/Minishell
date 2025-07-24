@@ -2,12 +2,22 @@ Taski do ogarnięcia:
 
 1. Ogarnąć przekazywanie plików (redirekcje).
 
-2. Ogarnąć przekazywanie flag.
+2. Ogarnąć przekazywanie komend  ogranij aby komendy byly w jednym array z flagami .
 
-3. Ogarnąć przekazywanie komend.
+3. Ogarnąć przekazywanie wartości w komendach i z $.
 
-4. Ogarnąć przekazywanie wartości w komendach i z $.
+5. Ogranać case z $  pkt 9.
 
-5. Sygnały
+7.c4r1s1% $?
+zsh: command not found: 0
+c4r1s1% $?
+zsh: command not found: 127
 
-6. Ogarnąć norminette i pilnować valgrind.
+8.c4r1s1% echo "$HOMEsad" asd
+ asd
+c4r1s1% echo "$HOMEsad435345345 234234" asd
+ 234234 asd
+c4r1s1% echo "$HOME" 
+
+9. Ogranij $USER a. gentenv szukja zmienenj czy jest jak nie \n jak jest wypisz to co jest po =
+i zapisz sobie kopie genenv do linkd listy i psllijtuj ają po znaku + i wtedy bedzie pelna implementacja $ 

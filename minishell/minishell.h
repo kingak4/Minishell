@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/23 14:29:09 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/24 16:52:46 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <signal.h>
 # include <unistd.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -28,6 +29,7 @@
 # define MAX_ARGS 64
 // r_in = 1 to jest > r_app = 1 >> lub  = 0 brak
 // r_out = 1 to jest < r_hdoc = 1 << lub  = 0 brak
+// falgi dodaj do komend aby było razem 
 typedef struct s_redirect
 {
 	int		r_in;
@@ -45,11 +47,10 @@ typedef struct s_pars
 	char			**file;
 	char			**flags;
 	int				var;
+	char			**args;
 	char			*str;
 	int				pip;
 	t_redirect		*redirect;
-	int				spc_pos;
-	int				spc_mask;
 }		t_pars;
 
 //Command
@@ -97,4 +98,10 @@ int		is_meta(char c);
 char	*normalize_input(const char *s, int i, int j, char quote);
 int		flag_checker(t_pars *read);
 t_pars	*flag_pars(t_pars *read);
+char	quote_is_g(char c, char quote);
+int		dolar_checker(t_pars *read);
+t_pars	*dolar_pars(t_pars *read);
+void	set_interactive_signals(void);
+void	deactivate_ctrlc(int sig);
+void	activate_ctrlc(int sig);
 #endif

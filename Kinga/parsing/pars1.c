@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:21:38 by root              #+#    #+#             */
-/*   Updated: 2025/07/23 14:40:06 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/24 14:18:52 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,7 @@ void	free_pars(t_pars *read)
 		free(read->line);
 	if (read->flags)
 		free_tab(read->flags);
+	if (read->args)
+		free_tab(read->args);
 	free(read);
 }
