@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/18 15:21:38 by root              #+#    #+#             */
-/*   Updated: 2025/07/24 14:18:52 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/28 15:57:07 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	is_redi(t_pars *read)
 		else if (ft_strcmp(read->tokens[i], "<<") == 0)
 			read->redirect->r_hdoc++;
 		i++;
-	}
+	}	
 }
 
 void	free_pars(t_pars *read)

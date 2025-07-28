@@ -1,23 +1,25 @@
 Taski do ogarnięcia:
 
-1. Ogarnąć przekazywanie plików (redirekcje).
+1. ogranicj kopiwoanie poprawne komend arugumentow kolejnosc zachowaj trzeba to uporzadkowac
+2. Zrób rozpozanie czy mam y myślniki jesli tak usuowamy
+3. Zrób funkje finalna  i wyczysc zmirnna tokens 
+4. Flagi:
+  [flag 0]: $DOLAR
+  [flag 1]: -n napraw to 
 
-2. Ogarnąć przekazywanie komend  ogranij aby komendy byly w jednym array z flagami .
+4. Ogarnąć przekazywanie wartości w komendach i z $ .
 
-3. Ogarnąć przekazywanie wartości w komendach i z $.
-
-5. Ogranać case z $  pkt 9.
-
-7.c4r1s1% $?
+5.c4r1s1% $? (można zrobic dopeiro po egzekucji)
 zsh: command not found: 0
 c4r1s1% $?
 zsh: command not found: 127
 
-8.c4r1s1% echo "$HOMEsad" asd
- asd
+6.c4r1s1% echo "$HOMEsad" asd
+asd
 c4r1s1% echo "$HOMEsad435345345 234234" asd
  234234 asd
 c4r1s1% echo "$HOME" 
 
-9. Ogranij $USER a. gentenv szukja zmienenj czy jest jak nie \n jak jest wypisz to co jest po =
-i zapisz sobie kopie genenv do linkd listy i psllijtuj ają po znaku + i wtedy bedzie pelna implementacja $ 
+7. Ogranij $USER a. gentenv szukja zmienenj czy jest jak nie \n jak jest wypisz to co jest po =
+i zapisz sobie kopie genenv do linkd listy i psllijtuj ają po znaku + i wtedy bedzie pelna implementacja $
+

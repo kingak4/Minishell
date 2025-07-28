@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/24 16:53:37 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:18:08 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -496,7 +496,10 @@ int	main(void)
 			for (int i = 0; cmd->tokens[i]; i++)
 				printf("  [%d]: %s\n", i, cmd->tokens[i]);
 		}
-
+		if (is_redi_first(cmd))
+   		 printf("🔴 Redirekcja jest pierwszym tokenem!\n");
+		else
+    		printf("⚪ Redirekcji na pierwszym miejscu nie ma.\n");
 		if (cmd->redirect)
 		{
 			printf("Redirekcje:\n");

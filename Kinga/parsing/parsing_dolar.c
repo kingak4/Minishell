@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:18:35 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/24 16:39:57 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:56:10 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	check_token_d(const char *token, int *d, int *space, int *d_out)
 			else if (token[j] == ' ')
 				(*space) = 1;
 		}
-		else if (token[j + 1] && token[j] == '$' && ft_isprint(token[j + 1]
-				&& q != -1))
+		else if (token[j + 1] && token[j] == '$' && ft_isprint(token[j + 1])
+			&& q != -1)
 			(*d_out) = 1;
 		else if (q == -1)
 			(*d_out) = 0;

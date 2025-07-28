@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/24 16:52:46 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/28 16:18:53 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ typedef struct s_pars
 	struct s_pars	*next;
 	char			*line;
 	char			**tokens;
-	char			*cmd;
 	char			**file;
 	char			**flags;
 	int				var;
 	char			**args;
-	char			*str;
 	int				pip;
 	t_redirect		*redirect;
 }		t_pars;
@@ -104,4 +102,7 @@ t_pars	*dolar_pars(t_pars *read);
 void	set_interactive_signals(void);
 void	deactivate_ctrlc(int sig);
 void	activate_ctrlc(int sig);
+int		is_redi_first(t_pars *read);
+int		has_heredoc(t_pars *read);
+int		has_std_redirects(t_pars *read);
 #endif
