@@ -6,7 +6,7 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/24 00:24:05 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/29 22:48:40 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,9 @@ t_pars				*check_read(t_pars *read);
 // main
 int					main(int argc, char **argv, char **envp);
 void				execute(t_two **cmd, t_mini *shell);
+void				init_cmd_pars(type_of_cmd_pars *cmd_pars);
+t_two				*convert_to_t_two(type_of_cmd_pars *cmd_pars);
+void				init_shell(type_of_shell *shell, char **envp);
 // pipe
 int					minipipe(t_mini *mini);
 void				redir_pipe(t_mini *mini, t_two *token, int type);

@@ -6,7 +6,7 @@
 /*   By: kdyga <kdyga@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 17:22:20 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/24 01:01:39 by kdyga            ###   ########.fr       */
+/*   Updated: 2025/07/29 22:43:21 by kdyga            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,4 @@ void	executor(t_two *cmd, t_mini *shell)
 		exec_builtin(cmd->args, shell);
 	else
 		exec_external(cmd->args, shell->envp);
-}
-
-static char	*join_path_cmd(const char *path, const char *cmd)
-{
-	char	*full_path;
-	int		len;
-
-	len = ft_strlen(path) + ft_strlen(cmd) + 2;
-	full_path = malloc(len);
-	if (!full_path)
-		return (NULL);
-	snprintf(full_path, len, "%s/%s", path, cmd);
-	return (full_path);
 }
