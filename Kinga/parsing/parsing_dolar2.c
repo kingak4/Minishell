@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:46:12 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/24 14:19:34 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:17:15 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ static void	process_token(t_pars *read, int i, int *a)
 	j = 0;
 	q = 0;
 	start = -1;
-	read->var = 0;
 	while (read->tokens[i][j])
 	{
 		q = quote_is_g(read->tokens[i][j], q);
@@ -70,6 +69,7 @@ t_pars	*dolar_pars(t_pars *read)
 		return (NULL);
 	i = 0;
 	a = 0;
+	read->var = 0;
 	while (read->tokens[i])
 	{
 		process_token(read, i, &a);

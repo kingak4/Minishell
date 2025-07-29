@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:39:21 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/24 08:56:43 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/29 10:08:36 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	process_token(t_pars *read, int i, int *f)
 	while (read->tokens[i][j])
 	{
 		q = quote_is_g(read->tokens[i][j], q);
-		if (q)
+		if (q && read->tokens[i][j + 1] && read->tokens[i][j] == '-')
 			return (save_flag_from_quote(read, i, j, f));
 		else if (read->tokens[i][j + 1] && read->tokens[i][j] == '-'
 			&& ft_isprint(read->tokens[i][j + 1]))

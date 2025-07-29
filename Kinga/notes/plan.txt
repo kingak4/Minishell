@@ -1,25 +1,39 @@
 Taski do ogarnięcia:
 
-1. ogranicj kopiwoanie poprawne komend arugumentow kolejnosc zachowaj trzeba to uporzadkowac
-2. Zrób rozpozanie czy mam y myślniki jesli tak usuowamy
-3. Zrób funkje finalna  i wyczysc zmirnna tokens 
-4. Flagi:
-  [flag 0]: $DOLAR
-  [flag 1]: -n napraw to 
+1. Ogranać kopiowanie poprawnych komend, argumentów oraz plików po redirekcjach oraz heredoc.
+Kolejność operacji zachować i uporządkować.
 
-4. Ogarnąć przekazywanie wartości w komendach i z $ .
+2. Zrobić rozpoznanie, czy w argumentach i
+komendach  znajdują się myślniki (flagowe). Jeśli tak, usuwać je.
 
-5.c4r1s1% $? (można zrobic dopeiro po egzekucji)
-zsh: command not found: 0
-c4r1s1% $?
-zsh: command not found: 127
+3. Napisać funkcję finalną parsowania,
+ która wyczyści zmienną tokens.
 
-6.c4r1s1% echo "$HOMEsad" asd
-asd
-c4r1s1% echo "$HOMEsad435345345 234234" asd
- 234234 asd
-c4r1s1% echo "$HOME" 
 
-7. Ogranij $USER a. gentenv szukja zmienenj czy jest jak nie \n jak jest wypisz to co jest po =
-i zapisz sobie kopie genenv do linkd listy i psllijtuj ają po znaku + i wtedy bedzie pelna implementacja $
+Wspólnie
+1. kikwasni@c4r1s1:~$ $?  
+0: command not found  
+kikwasni@c4r1s1:~$ $?  
+127: command not found  
+kikwasni@c4r1s1:~$ ls  
+42_Warsaw Documents Minishell planner.txt Templates  
+kikwasni@c4r1s1:~$ $?  
+0: command not found  
+kikwasni@c4r1s1:~$ $?  
+127: command not found  
+kikwasni@c4r1s1:~$ ld  
+ld: no input files  
+kikwasni@c4r1s1:~$ $?  
+1: command not found
+Obsłużyć poprawnie $?, które powinno rozwijać się do statusu zakończenia ostatniego polecenia
+uruchomionego na pierwszym planie.
+
+2. Napisac pełen main ogranac make file i mergowanie.
+3. TESTY.
+
+Kamil 
+1. Przetstowac dokładnie swój kod z valgrind 
+2. Zorganizować przekazywanie zmiennych środowiskowych po znaku dolara $, korzystając z getenv —
+np. dla zmiennej USER pobierać wartość z systemu.
+
 
