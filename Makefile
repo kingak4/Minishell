@@ -6,7 +6,7 @@
 #    By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/01 19:22:14 by kdyga             #+#    #+#              #
-#    Updated: 2025/07/28 16:19:23 by kikwasni         ###   ########.fr        #
+#    Updated: 2025/07/31 10:27:51 by kikwasni         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror -g -I minishell/ -I libft/includes
 LDFLAGS = -lreadline libft/libft.a
 
-SRCS = main/main.c Kamil/command/cd.c Kinga/lexing/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c Kinga/lexing/lex.c Kinga/checkers/check1.c Kinga/checkers/check2.c Kinga/checkers/check3.c Kinga/parsing/pars1.c Kinga/lexing/free_code.c Kinga/parsing/pars_flags.c Kinga/lexing/no_space_case.c Kinga/parsing/pars_flags2.c Kinga/parsing/parsing_dolar.c Kinga/parsing/parsing_dolar2.c signals.c Kinga/parsing/p_question_mark.c Kinga/parsing/pars_cmd.c Kinga/parsing/check_redi.c
+SRCS = main/main.c Kamil/command/cd.c Kinga/lexing/read_line.c Kinga/lexing/clear_split.c Kinga/lexing/ft_split_mini.c Kinga/lexing/lex.c Kinga/checkers/check1.c Kinga/checkers/check2.c Kinga/checkers/check3.c Kinga/parsing/pars1.c Kinga/lexing/free_code.c Kinga/parsing/pars_flags.c Kinga/lexing/no_space_case.c Kinga/parsing/pars_flags2.c Kinga/parsing/parsing_dolar.c Kinga/parsing/parsing_dolar2.c signals.c Kinga/parsing/p_question_mark.c Kinga/parsing/pars_cmd.c Kinga/parsing/check_redi.c Kinga/parsing/pars2.c Kinga/parsing/pars3.c Kinga/parsing/small_checker.c Kinga/parsing/pars4.c
 OBJS = $(SRCS:.c=.o)
 
 # Libft

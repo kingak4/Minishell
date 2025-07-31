@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 13:51:17 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/23 14:11:07 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 11:52:42 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*remove_hyphens(char *s)
 		return (NULL);
 	while (s[i])
 	{
-		if (s[i] != '"')
+		if (s[i] != '"' && s[i] != '\'')
 		{
 			rest[j] = s[i];
 			j++;

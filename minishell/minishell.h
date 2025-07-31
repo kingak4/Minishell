@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/28 16:18:53 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:30:05 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_pars
 	int				var;
 	char			**args;
 	int				pip;
+	char			**deli;
 	t_redirect		*redirect;
 }		t_pars;
 
@@ -103,6 +104,17 @@ void	set_interactive_signals(void);
 void	deactivate_ctrlc(int sig);
 void	activate_ctrlc(int sig);
 int		is_redi_first(t_pars *read);
-int		has_heredoc(t_pars *read);
-int		has_std_redirects(t_pars *read);
+int		has_heredoc(const char *token);
+int		has_std_redirects(const char *token);
+void	pars_files(t_pars *read);
+void	pars_cmd(t_pars *read);
+void	split_all_pipes(t_pars *cmd);
+t_pars	*split_on_pipe(t_pars *current_node);
+t_pars	*create_new_pars_node(void);
+int		find_pipe_id(t_pars *read);
+int		flag_checker1(char *token);
+int		is_normal_arg(t_pars *read, int i);
+int		is_file_after_redirect(char **tokens, int i);
+void	pars_here_doc(t_pars *read);
+int		is_file_after_here(char **tokens, int i);
 #endif

@@ -1,12 +1,13 @@
 Taski do ogarnięcia:
 
-1. Ogranać kopiowanie poprawnych komend, argumentów oraz plików po redirekcjach oraz heredoc.
-Kolejność operacji zachować i uporządkować.
+1. Ogranac parsowanie koemd i pozostalych argumentow 
 
 2. Zrobić rozpoznanie, czy w argumentach i
-komendach  znajdują się myślniki (flagowe). Jeśli tak, usuwać je.
+komendach  znajdują się myślniki jesli tak suuwca je.
+4. zrobic funkje ogranaijac mi komendy dodaj je do dile ora z pozostalosci
+do args>
 
-3. Napisać funkcję finalną parsowania,
+3. Napisać funkcję finalną parsowania, oraz ogranac przechodzenie do kolejnego node 
  która wyczyści zmienną tokens.
 
 

@@ -6,26 +6,21 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 15:53:31 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/28 16:15:32 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/30 15:02:22 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	has_std_redirects(t_pars *read)
+int	has_std_redirects(const char *token)
 {
-	if (!read || !read->redirect)
-		return (0);
-	return (read->redirect->r_in > 0
-		|| read->redirect->r_out > 0
-		|| read->redirect->r_app > 0);
+	return (token && (ft_strcmp(token, "<") == 0
+			|| ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0));
 }
 
-int	has_heredoc(t_pars *read)
+int	has_heredoc(const char *token)
 {
-	if (!read || !read->redirect)
-		return (0);
-	return (read->redirect->r_hdoc > 0);
+	return (token && ft_strcmp(token, "<<") == 0);
 }
 
 int	is_redi_first(t_pars *read)

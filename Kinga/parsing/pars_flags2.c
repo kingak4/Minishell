@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 08:39:21 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/29 10:08:36 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 09:55:59 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,25 @@ t_pars	*flag_pars(t_pars *read)
 	int	i;
 	int	f;
 
-	if (!flag_checker(read))
-		return (NULL);
 	read->flags = malloc(sizeof(char *) * 101);
 	if (!read->flags)
 		return (NULL);
 	i = 0;
 	f = 0;
-	while (read->tokens[i])
+	if (read->tokens[0] && !is_redi_first(read))
 	{
-		process_token(read, i, &f);
-		i++;
+		read->flags[f] = remove_hyphens(read->tokens[i]);
+		read->tokens[0][0] = '\0';
+		f++;
+	}
+	while (flag_checker(read))
+	{
+		i = 1;
+		while (read->tokens[i])
+		{
+			process_token(read, i, &f);
+			i++;
+		}
 	}
 	read->flags[f] = NULL;
 	return (read);

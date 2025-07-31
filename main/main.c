@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/06 12:41:43 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/28 16:18:08 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:26:31 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ int minishell_loop(void)
 
 //     return 0;
 // }
-//int	main(void)
+// int	main(void)
 //{
 //	t_pars	*read;
 //	int		i;
@@ -301,7 +301,7 @@ int minishell_loop(void)
 //	rl_free_line_state();
 
 //	return (0);
-//int	main(void)
+// int	main(void)
 //{
 //	t_pars	*cmd;
 
@@ -351,13 +351,13 @@ int minishell_loop(void)
 //			printf("zwrócił 0\n");
 //		if (flag_checker(cmd))
 //			printf("Zwrócił 1 – znaleziono flagi\n");
-			
+
 //	if (flag_pars(cmd))
 //	{
 //		printf("Flagi:\n");
 //		for (int i = 0; cmd->flags && cmd->flags[i]; i++)
 //		printf("  [flag %d]: %s\n", i, cmd->flags[i]);
-		
+
 //		printf("Tokeny po usunięciu flag:\n");
 //		for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
 //		printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
@@ -369,7 +369,7 @@ int minishell_loop(void)
 //	rl_clear_history();
 //	return (0);
 //}
-//int main(void)
+// int main(void)
 //{
 //    t_pars *cmd = NULL;
 
@@ -459,7 +459,7 @@ int minishell_loop(void)
 //    rl_clear_history();
 //    return 0;
 //}
-int	main(void)
+int main(void)
 {
 	t_pars *cmd = NULL;
 
@@ -497,9 +497,9 @@ int	main(void)
 				printf("  [%d]: %s\n", i, cmd->tokens[i]);
 		}
 		if (is_redi_first(cmd))
-   		 printf("🔴 Redirekcja jest pierwszym tokenem!\n");
+			printf("🔴 Redirekcja jest pierwszym tokenem!\n");
 		else
-    		printf("⚪ Redirekcji na pierwszym miejscu nie ma.\n");
+			printf("⚪ Redirekcji na pierwszym miejscu nie ma.\n");
 		if (cmd->redirect)
 		{
 			printf("Redirekcje:\n");
@@ -520,7 +520,7 @@ int	main(void)
 		else
 			printf("Nie znaleziono flag\n");
 
-		if (flags_found && flag_pars(cmd))
+		if (flag_pars(cmd))
 		{
 			printf("Flagi:\n");
 			for (int i = 0; cmd->flags && cmd->flags[i]; i++)
@@ -530,26 +530,41 @@ int	main(void)
 			for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
 				printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
 		}
-		else if (flags_found)
-			printf("Błąd podczas parsowania flag.\n");
+		//else if (flags_found)
+		//	printf("Błąd podczas parsowania flag.\n");
 
-		if (dolar_checker(cmd))
+		if (dolar_pars(cmd))
 		{
-			printf("🟢 Tokeny zawierają $ do ekspansji (warunki spełnione).\n");
-
-			if (dolar_pars(cmd))
-			{
-				printf("Argumenty po ekspansji $:\n");
-				for (int i = 0; cmd->args && cmd->args[i]; i++)
-					printf("  [arg %d]: %s\n", i, cmd->args[i]);
+			printf("Argumenty po ekspansji $:\n");
+			for (int i = 0; cmd->args && cmd->args[i]; i++)
+				printf("  [arg %d]: %s\n", i, cmd->args[i]);
 			}
 			else
 				printf("❌ Błąd podczas parsowania ekspansji dolara ($).\n");
-		}
-		else
-			printf("⚪ Brak tokenów z ekspansją $ lub nie spełniają warunków.\n");
 
 		printf("🔎 Wartość cmd->var: %d\n", cmd->var);
+		pars_files(cmd);
+		if (cmd->file && cmd->file[0])
+		{
+			printf("🟩 Pliki z przekierowań:\n");
+			for (int i = 0; cmd->file[i]; i++)
+				printf("  [file %d]: %s\n", i, cmd->file[i]);
+		}
+		else
+		{
+			printf("⚪ Nie znaleziono plików do przekierowań.\n");
+		}
+		pars_here_doc(cmd);
+		if (cmd->deli && cmd->deli[0])
+		{
+			printf("🟩 Pliki z przekierowań << :\n");
+			for (int i = 0; cmd->deli[i]; i++)
+				printf("  [file %d]: %s\n", i, cmd->deli[i]);
+		}
+		else
+		{
+			printf("⚪ Nie znaleziono plików do przekierowań.\n");
+		}
 	}
 
 	if (cmd)
@@ -558,3 +573,100 @@ int	main(void)
 	rl_clear_history();
 	return 0;
 }
+//void	print_cmd_nodes(t_pars *cmd)
+//{
+//	int n = 0;
+//	while (cmd)
+//	{
+//		printf("🟦 Node %d:\n", n++);
+//		if (cmd->tokens)
+//		{
+//			for (int i = 0; cmd->tokens[i]; i++)
+//				printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
+//		}
+//		else
+//			printf("  (brak tokenów)\n");
+//		cmd = cmd->next;
+//	}
+//}
+//int main(void)
+//{
+//    t_pars *cmd = NULL;
+
+//    while (1)
+//    {
+//        if (cmd)
+//        {
+//            free_list(cmd);
+//            cmd = NULL;
+//        }
+
+//        cmd = init_pars(NULL);
+//        if (!cmd)
+//            break;
+
+//        printf("\n🌿 Wpisz komendę do testu pipe'ów (np. ls -l | grep .c | wc -l):\n$> ");
+
+//        if (!read_cmd(cmd)) // readline + przypisanie do cmd->line
+//            break;
+
+//        if (!lex(cmd)) // tokenizacja do cmd->tokens
+//            continue;
+
+//        printf("🔹 Tokeny przed split_on_pipe:\n");
+//        for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
+//            printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
+
+//        // 🔧 Tu wykonujemy split po pipe (rekurencyjnie w sensie iteracji przez listę)
+//        split_all_pipes(cmd);
+
+//        // 📤 Wydrukuj wszystkie nody i ich tokeny
+//        printf("\n🧩 Struktura po split_on_pipe:\n");
+//        print_cmd_nodes(cmd);
+//    }
+
+//    if (cmd)
+//        free_list(cmd);
+//    rl_clear_history();
+//    return (0);
+//}
+//int	main(void)
+//{
+//	t_pars *cmd = NULL;
+
+//	while (1)
+//	{
+//		if (cmd)
+//		{
+//			free_list(cmd);
+//			cmd = NULL;
+//		}
+
+//		cmd = init_pars(NULL);
+//		if (!cmd)
+//			break;
+
+//		printf("\n🌿 Wpisz komendę do testu pipe'ów:\n$> ");
+
+//		if (!read_cmd(cmd)) // readline + przypisanie do cmd->line
+//			break;
+
+//		if (!lex(cmd)) // tokenizacja do cmd->tokens
+//			continue;
+
+//		printf("🔹 Tokeny przed split_on_pipe:\n");
+//		for (int i = 0; cmd->tokens && cmd->tokens[i]; i++)
+//			printf("  [tok %d]: %s\n", i, cmd->tokens[i]);
+
+//		// 🔧 Tu wykonujemy split po pipe (rekurencyjnie)
+//		split_all_pipes(cmd);
+//		// 📤 Wydrukuj wszystkie nody i ich tokeny
+//		printf("\n🧩 Struktura po split_on_pipe:\n");
+//		print_cmd_nodes(cmd);
+//	}
+
+//	if (cmd)
+//		free_list(cmd);
+//	rl_clear_history();
+//	return (0);
+//}
