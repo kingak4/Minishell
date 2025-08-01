@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 21:04:35 by kdyga             #+#    #+#             */
-/*   Updated: 2025/07/31 12:30:05 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/08/01 11:02:29 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,6 @@ int		is_normal_arg(t_pars *read, int i);
 int		is_file_after_redirect(char **tokens, int i);
 void	pars_here_doc(t_pars *read);
 int		is_file_after_here(char **tokens, int i);
+void	expand_dollar_tokens(t_pars *read);
+int		extract_normal_args(t_pars *read);
 #endif

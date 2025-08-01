@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/28 14:27:09 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/31 12:23:42 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:37:39 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	pars_files(t_pars *read)
 	}
 	read->file[g] = NULL;
 }
+
 void	pars_here_doc(t_pars *read)
 {
 	int	i;

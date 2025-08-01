@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 12:46:12 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/31 12:33:19 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/08/01 11:02:18 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,14 @@ static void	process_token(t_pars *read, int i, int *a)
 		save_dolar_direct(read, i, start, a);
 }
 
-t_pars	*dolar_pars(t_pars *read)
+int	extract_normal_args(t_pars *read)
 {
 	int	i;
 	int	a;
 
 	read->args = malloc(sizeof(char *) * 101);
 	if (!read->args)
-		return (NULL);
+		return (0);
 	i = 0;
 	a = 0;
 	read->var = 0;
@@ -76,12 +76,23 @@ t_pars	*dolar_pars(t_pars *read)
 		{
 			read->args[a] = remove_hyphens(read->tokens[i]);
 			read->tokens[i][0] = '\0';
-			a++;	
+			a++;
 		}
 		i++;
 	}
-	i = 1;
-	while (dolar_checker (read))
+	read->args[a] = NULL;
+	return (1);
+}
+
+void	expand_dollar_tokens(t_pars *read)
+{
+	int	i;
+	int	a;
+
+	a = 0;
+	while (read->args && read->args[a])
+		a++;
+	while (dolar_checker(read))
 	{
 		i = 1;
 		while (read->tokens[i])
@@ -91,5 +102,4 @@ t_pars	*dolar_pars(t_pars *read)
 		}
 	}
 	read->args[a] = NULL;
-	return (read);
 }

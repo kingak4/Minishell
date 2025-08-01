@@ -6,7 +6,7 @@
 /*   By: kikwasni <kikwasni@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 10:19:38 by kikwasni          #+#    #+#             */
-/*   Updated: 2025/07/31 11:50:08 by kikwasni         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:37:11 by kikwasni         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	is_normal_arg(t_pars *read, int i)
 		return (0);
 	return (1);
 }
+
 static void	init_flags(char *q, int *space, int *d, int *d_out)
 {
 	*q = 0;
